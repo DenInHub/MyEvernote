@@ -34,23 +34,24 @@ namespace MyEvernote.DataLayer.SQL
             }
             return note;
         }
-        public void Change(Guid id)
+        public void Change(Note note)
         {
             using (SqlConnection connection = new SqlConnection(_ConnectionString))
             {
                 connection.Open();
                 using (var command = connection.CreateCommand())
                 {
-                    command.CommandText = "UPDATE Note set Text=@text";
-                    command.Parameters.AddWithValue("@text" , "eqweqweq");
-
+                    command.CommandText = "update Note set Text = @text,Title = @title  where Id = @noteId";
+                    command.Parameters.AddWithValue("@text" , note.Text);
+                    command.Parameters.AddWithValue("@title", note.Title);
+                    command.Parameters.AddWithValue("@noteId", note.Id);
                     command.ExecuteNonQuery();
                 }
-                connection.Open();
+                
                 using (var command = connection.CreateCommand())
                 {
-                    command.CommandText = "insert into Changes(Id,DateChange) value(@id,@dateChange)";
-                    command.Parameters.AddWithValue("@id", id);
+                    command.CommandText = "insert into Changes(Id,DateChange) values(@id,@dateChange)";
+                    command.Parameters.AddWithValue("@id", note.Id);
                     command.Parameters.AddWithValue("@dateChange", DateTime.Now);
                     command.ExecuteNonQuery();
                 }
@@ -87,22 +88,44 @@ namespace MyEvernote.DataLayer.SQL
                 }
             }
         }
-
+        public void Share(Guid NoteId , Guid UserId)
+        {
+            using (SqlConnection connection = new SqlConnection(_ConnectionString))
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "insert into Shared (NoteId , UserId) values (@NoteId , @UserId)";
+                    command.Parameters.AddWithValue("@NoteId" , NoteId);
+                    command.Parameters.AddWithValue("@UserId" , UserId);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
         public void Delete(Guid id)
         {
             using (SqlConnection connection = new SqlConnection(_ConnectionString))
             {
                 connection.Open();
+
                 using (SqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = "delete from Note where Id=@id";
+                    command.CommandText = "delete from Shared where NoteId=@id";
                     command.Parameters.AddWithValue("@id", id);
+                    command.ExecuteNonQuery();
+                }
+                connection.Close();
+                connection.Open();
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = "delete from Note where Id=@idd";
+                    command.Parameters.AddWithValue("@idd", id);
                     command.ExecuteNonQuery();
                 }
 
             }
         }
 
-      
+       
     }
 }

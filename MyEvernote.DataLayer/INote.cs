@@ -11,8 +11,10 @@ namespace MyEvernote.DataLayer
     {
         Note Create(Note note);
         Note Get(Guid id);
-        void Change(Guid id);
+        void Change(Note note);
         void Delete(Guid id);
+        void Share(Guid NoteId , Guid UserId);
+        
     }
     
 }

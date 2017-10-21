@@ -38,16 +38,30 @@ namespace MyEvernote.DataLayer.SQL
             using (SqlConnection connection =new SqlConnection(_ConnectionString))
             {
                 connection.Open();
+
                 using (SqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = "delete from Users where Id=@id";
-                    command.Parameters.AddWithValue("@id",id);
+                    command.CommandText = "delete from Shared where UserId = @id";
+                    command.Parameters.AddWithValue("@id", id);
+                    command.ExecuteNonQuery();
+                }
+                connection.Close();
+                connection.Open();
+
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = "delete from Users where Id = @idd";
+                    command.Parameters.AddWithValue("@idd" , id);
                     command.ExecuteNonQuery();
                 }
 
             }
         }
-
+        /// <summary>
+        /// exception: ArgumentException
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public User Get(Guid id)
         {
             using (SqlConnection connection = new SqlConnection(_ConnectionString))
@@ -61,7 +75,7 @@ namespace MyEvernote.DataLayer.SQL
                     using (var reader = command.ExecuteReader())
                     {
                         if (!reader.Read())
-                            throw new ArgumentException($"пользователь с Id {id} не найден");
+                            return null;
 
                         //var idd = (string)reader["Id"];
                         var user = new User
