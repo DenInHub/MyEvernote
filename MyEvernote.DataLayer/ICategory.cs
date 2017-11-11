@@ -11,6 +11,7 @@ namespace MyEvernote.DataLayer
     {
         Category Create(Category category);
         Category Get(Guid Id);
+        List<Category> GetCategories();
         void Delete(Guid Id);
     }
 }

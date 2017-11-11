@@ -3,6 +3,9 @@ using MyEvernote.Model;
 using MyEvernote.DataLayer.SQL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using NLog;
+using MyEvernote.Logger;
+
 
 namespace MyEvernote.DataLayer.SQL.Tests
 {
@@ -19,11 +22,13 @@ namespace MyEvernote.DataLayer.SQL.Tests
         [TestMethod]
         public void ShouldCreateUser()
         {
+            Log.Instance.Info("from test user");
             //arrange
             var user = new User
             {
                 Name = "TestCreate"
             };
+
             var repository = new UsersRepository(_connectionstring);
             //act
             var result = repository.Create(user);
@@ -91,7 +96,7 @@ namespace MyEvernote.DataLayer.SQL.Tests
             //act
             var CreatedNote = repository.Create(note);
             NotesForTests.Add(CreatedNote.Id);
-            var NoteFromDB = repository.Get(CreatedNote.Id);
+            var NoteFromDB = repository.GetNotes(CreatedNote.Id);
 
             //assert
             Assert.AreEqual(CreatedNote.Id, NoteFromDB.Id);
@@ -117,7 +122,7 @@ namespace MyEvernote.DataLayer.SQL.Tests
             note.Text = "Chanhed Text";
             //act
             repository.Change(note);
-            var ChangeNoteFromDB = repository.Get(CreatedNote.Id);
+            var ChangeNoteFromDB = repository.GetNotes(CreatedNote.Id);
 
             //assert
             Assert.AreEqual(note.Text, ChangeNoteFromDB.Text);
@@ -150,6 +155,13 @@ namespace MyEvernote.DataLayer.SQL.Tests
             //assert
             Assert.AreEqual(true , true);
         }
+        [TestMethod]
+        public void ShouldGetAllUsers()
+        {
+            var AllUsersFromDB = new UsersRepository(_connectionstring).GetAll();
+            Assert.AreEqual(true, true);
+        }
+
         [TestMethod]
         public void ShouldCleanUp()
         {

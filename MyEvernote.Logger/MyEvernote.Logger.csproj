@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B0EA0AF0-AE21-453E-946D-07B4DD42B2A8}</ProjectGuid>
+    <ProjectGuid>{CC084558-9793-4906-B5FC-D74FCEF64D57}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MyEvernote.DataLayer.SQL</RootNamespace>
-    <AssemblyName>MyEvernote.DataLayer.SQL</AssemblyName>
+    <RootNamespace>MyEvernote.Logger</RootNamespace>
+    <AssemblyName>MyEvernote.Logger</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -44,24 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CategoriesRepository.cs" />
-    <Compile Include="NotesRepository.cs" />
-    <Compile Include="UsersRepository.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MyEvernote.DataLayer\MyEvernote.DataLayer.csproj">
-      <Project>{f082190f-c25c-48e5-a015-d290a521c93f}</Project>
-      <Name>MyEvernote.DataLayer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MyEvernote.Logger\MyEvernote.Logger.csproj">
-      <Project>{cc084558-9793-4906-b5fc-d74fcef64d57}</Project>
-      <Name>MyEvernote.Logger</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MyEvernote.Model\MyEvernote.Model.csproj">
-      <Project>{c3515490-fbc0-41d0-9ec7-ac613c7815ab}</Project>
-      <Name>MyEvernote.Model</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using MyEvernote.DataLayer;
 using MyEvernote.DataLayer.SQL;
 using MyEvernote.Model;
+using MyEvernote.Logger;
+using System.Web.Http.Filters;
+
 
 namespace MyEvernote.Api.Controllers
 {
+   // [NotImplExceptionFilter]
     public class NotesController : ApiController
     {
         private const string ConnectionString = @"Data Source=DESKTOP-IC679A3;Initial Catalog=MyEvernote;Integrated Security=True";
@@ -21,24 +22,42 @@ namespace MyEvernote.Api.Controllers
         }
 
         [HttpGet]
-        [Route("api/notes/{id}")]
-        public Note Get(Guid id)
+        [Route("api/note/{NoteId}")]
+        public Note GetNote(Guid NoteId)
         {
-            return _notesRepository.Get(id);
+            Log.Instance.Info("заметки  с ID {0}", NoteId);
+            return _notesRepository.GetNote(NoteId);
+        }
+        [HttpGet]
+        [Route("api/notes/{id}")]
+        public List<Note> Get(Guid id)
+        {
+            Log.Instance.Info("Запрос заметок пользователя с  ID {0}", id);
+            return _notesRepository.GetNotes(id);
         }
 
         [HttpPost]
         [Route("api/notes")]
         public Note Post(Note note)
         {
+            Log.Instance.Info("Создание заметки с {0}  ID {1}",note.Title, note.Id );
             return _notesRepository.Create(note);
+        }
+
+        [HttpPost]
+        [Route("api/notes/{id}")]
+        public void Change(Note note)
+        {
+            Log.Instance.Info("Изменение заметки с {0}  ID {1}", note.Title, note.Id);
+            _notesRepository.Change(note);
         }
 
         [HttpDelete]
         [Route("api/notes/{id}")]
         public void Delete(Guid id)
         {
-             _notesRepository.Delete(id);
+            Log.Instance.Info("Удаление заметки с  ID {0}", id);
+            _notesRepository.Delete(id);
         }
     }
 }

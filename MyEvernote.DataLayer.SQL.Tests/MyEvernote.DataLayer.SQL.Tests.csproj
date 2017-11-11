@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.4.12\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -62,15 +66,17 @@
       <Project>{f082190f-c25c-48e5-a015-d290a521c93f}</Project>
       <Name>MyEvernote.DataLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MyEvernote.Logger\MyEvernote.Logger.csproj">
+      <Project>{cc084558-9793-4906-b5fc-d74fcef64d57}</Project>
+      <Name>MyEvernote.Logger</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyEvernote.Model\MyEvernote.Model.csproj">
       <Project>{c3515490-fbc0-41d0-9ec7-ac613c7815ab}</Project>
       <Name>MyEvernote.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="OrderedTest1.orderedtest">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

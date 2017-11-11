@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace MyEvernote.DataLayer
 {
-        public interface IUser
-        {
-            User Create(User name);
-            void Delete(Guid id);
-            User Get(Guid id);
-        }
+    public interface IUser
+    {
+        User Create(User name);
+        void Delete(Guid id);
+        User Get(Guid id);
+        List<User> GetAll();
+    }
 }
+

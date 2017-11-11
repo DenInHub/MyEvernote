@@ -7,6 +7,7 @@ using System.Web.Http;
 using MyEvernote.DataLayer;
 using MyEvernote.DataLayer.SQL;
 using MyEvernote.Model;
+using MyEvernote.Logger;
 
 namespace MyEvernote.Api.Controllers
 {
@@ -24,13 +25,22 @@ namespace MyEvernote.Api.Controllers
         [Route("api/Categories/{id}")]
         public Category Get(Guid id)
         {
+            Log.Instance.Info("Запрос категории заметок  c ID {0}", id);
             return _categoriesRepository.Get(id);
+        }
+        [HttpGet]
+        [Route("api/Categories")]
+        public List<Category> Get()
+        {
+            return _categoriesRepository.GetCategories();
         }
 
         [HttpPost]
         [Route("api/Categories")]
-        public Category Createe(Category category)
+        public Category Create(Category category)
         {
+            Log.Instance.Info("Создание категории заметок  {0} c ID {1}", category.Name , category.Id);
+            //Log.Instance.Error
             return _categoriesRepository.Create(category);
         }
 
@@ -38,6 +48,7 @@ namespace MyEvernote.Api.Controllers
         [Route("api/Categories/{id}")]
         public void Delete(Guid id)
         {
+            Log.Instance.Info("Удаление категории заметок  c ID {0}", id);
             _categoriesRepository.Delete(id);
         }
     }

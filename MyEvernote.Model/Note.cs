@@ -8,7 +8,6 @@ namespace MyEvernote.Model
 {
     public class Note
     {
-      
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string Text { get; set; }
@@ -16,6 +15,6 @@ namespace MyEvernote.Model
         public DateTime Created { get; set; }
         public DateTime Changed { get; set; }
         public Guid Creator { get; set; }
-        public List<User> Shared { get; set; }
+        public List<Guid> Shared { get; set; }
     }
 }

@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyEvernote.DataLayer.SQL.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyEvernote.Api", "MyEvernote.Api\MyEvernote.Api.csproj", "{D61E8AA6-F38D-433A-A41F-B333BF11D002}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyEvernote.Logger", "MyEvernote.Logger\MyEvernote.Logger.csproj", "{CC084558-9793-4906-B5FC-D74FCEF64D57}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyEvernote.WinForm", "MyEvernote.WinForm\MyEvernote.WinForm.csproj", "{708D229C-E63A-43F3-9D78-4CD4A3892242}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{D61E8AA6-F38D-433A-A41F-B333BF11D002}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D61E8AA6-F38D-433A-A41F-B333BF11D002}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D61E8AA6-F38D-433A-A41F-B333BF11D002}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC084558-9793-4906-B5FC-D74FCEF64D57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC084558-9793-4906-B5FC-D74FCEF64D57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC084558-9793-4906-B5FC-D74FCEF64D57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC084558-9793-4906-B5FC-D74FCEF64D57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{708D229C-E63A-43F3-9D78-4CD4A3892242}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{708D229C-E63A-43F3-9D78-4CD4A3892242}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{708D229C-E63A-43F3-9D78-4CD4A3892242}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{708D229C-E63A-43F3-9D78-4CD4A3892242}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

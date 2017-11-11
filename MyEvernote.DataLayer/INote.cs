@@ -10,7 +10,8 @@ namespace MyEvernote.DataLayer
     public interface INote
     {
         Note Create(Note note);
-        Note Get(Guid id);
+        List<Note> GetNotes(Guid id);
+        Note GetNote(Guid NoteId);
         void Change(Note note);
         void Delete(Guid id);
         void Share(Guid NoteId , Guid UserId);

@@ -1,10 +1,8 @@
 ﻿using System;
 using MyEvernote.Model;
 using System.Data.SqlClient;
+using MyEvernote.Logger;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyEvernote.DataLayer.SQL
 {
@@ -15,13 +13,16 @@ namespace MyEvernote.DataLayer.SQL
         {
             _ConnectionString = ConnectionString;
         }
+
         public User Create(User user)
         {
+
             using (SqlConnection connection = new SqlConnection(_ConnectionString))
             {
                 connection.Open();
                 using (SqlCommand command = connection.CreateCommand())
                 {
+                    Log.Instance.Info("ура!!");
                     user.Id =  Guid.NewGuid();
                     command.CommandText = "insert into Users(Id,Name) values(@id,@name)";
                     command.Parameters.AddWithValue("@id", user.Id);
@@ -57,6 +58,7 @@ namespace MyEvernote.DataLayer.SQL
 
             }
         }
+
         /// <summary>
         /// exception: ArgumentException
         /// </summary>
@@ -89,6 +91,36 @@ namespace MyEvernote.DataLayer.SQL
                 }
             }
           
+        }
+
+        public List<User> GetAll()
+        {
+            using (SqlConnection connection = new SqlConnection(_ConnectionString))
+            {
+                List<User> Users= new List<User>();
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "select *from Users";
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        /*if (!reader.Read())
+                            return null;*/
+                        while (reader.Read())
+                        {
+                            var user = new User
+                            {
+                                Id = reader.GetGuid(reader.GetOrdinal("Id")),
+                                Name = reader.GetString(reader.GetOrdinal("Name"))
+                            };
+                            Users.Add(user);
+                        }
+                    }
+                    return Users;
+
+                }
+            }
         }
     }
 }

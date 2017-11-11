@@ -1,6 +1,7 @@
 ﻿using System;
 using MyEvernote.Model;
 using System.Data.SqlClient;
+using System.Collections.Generic;
 
 namespace MyEvernote.DataLayer.SQL
 {
@@ -34,7 +35,7 @@ namespace MyEvernote.DataLayer.SQL
                 connection.Open();
                 using (var command = connection.CreateCommand())
                 {
-                    command.CommandText = "select Id from Category where Id = @id";
+                    command.CommandText = "select * from Category where Id = @id";
                     command.Parameters.AddWithValue("@id", Id);
 
                     using (var reader = command.ExecuteReader())
@@ -44,6 +45,7 @@ namespace MyEvernote.DataLayer.SQL
 
                         var category = new Category();
                         category.Id = reader.GetGuid(reader.GetOrdinal("Id"));
+                        category.Name = reader.GetString(reader.GetOrdinal("Category"));
                         return category;
                     }
                     
@@ -63,6 +65,35 @@ namespace MyEvernote.DataLayer.SQL
                     command.ExecuteNonQuery();
                 }
 
+            }
+        }
+
+        public List<Category> GetCategories()
+        {
+            List<Category> Categories = new List<Category>();
+            using (SqlConnection connection = new SqlConnection(_ConnectionString))
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "select * from Category ";
+                    using (var reader = command.ExecuteReader())
+                    {
+                        /*if (!reader.Read())
+                            throw new ArgumentException($"категория с Id {Id} не найдена");*/
+                        while (reader.Read())
+                        {
+                            var category = new Category();
+                            category.Id = reader.GetGuid(reader.GetOrdinal("Id"));
+                            category.Name = reader.GetString(reader.GetOrdinal("Category"));
+                            Categories.Add(category);
+                        }
+                        
+                        return Categories;
+                    }
+
+
+                }
             }
         }
     }
