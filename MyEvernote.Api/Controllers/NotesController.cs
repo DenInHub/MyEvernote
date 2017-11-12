@@ -28,6 +28,7 @@ namespace MyEvernote.Api.Controllers
             Log.Instance.Info("заметки  с ID {0}", NoteId);
             return _notesRepository.GetNote(NoteId);
         }
+
         [HttpGet]
         [Route("api/notes/{id}")]
         public List<Note> Get(Guid id)
@@ -58,6 +59,15 @@ namespace MyEvernote.Api.Controllers
         {
             Log.Instance.Info("Удаление заметки с  ID {0}", id);
             _notesRepository.Delete(id);
+        }
+
+
+        [HttpPost]
+        [Route("api/notes/share/{NoteId}/{UserId}")]
+        public void Share(Guid NoteId,Guid UserId)
+        {
+            Log.Instance.Info($"Расшарить заметкку {NoteId} пользователю {UserId}");
+            _notesRepository.Share(NoteId, UserId);
         }
     }
 }

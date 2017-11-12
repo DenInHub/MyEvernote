@@ -68,17 +68,17 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(186, 174);
+            this.btnSave.Location = new System.Drawing.Point(186, 155);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 4;
-            this.btnSave.Text = "Сохранить";
+            this.btnSave.Text = "Изменить";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnViewInfo
             // 
-            this.btnViewInfo.Location = new System.Drawing.Point(267, 174);
+            this.btnViewInfo.Location = new System.Drawing.Point(299, 155);
             this.btnViewInfo.Name = "btnViewInfo";
             this.btnViewInfo.Size = new System.Drawing.Size(75, 23);
             this.btnViewInfo.TabIndex = 5;
@@ -96,7 +96,7 @@
             // 
             // btnCreateNote
             // 
-            this.btnCreateNote.Location = new System.Drawing.Point(186, 295);
+            this.btnCreateNote.Location = new System.Drawing.Point(16, 126);
             this.btnCreateNote.Name = "btnCreateNote";
             this.btnCreateNote.Size = new System.Drawing.Size(75, 23);
             this.btnCreateNote.TabIndex = 7;
@@ -106,7 +106,7 @@
             // 
             // btnDeleteNote
             // 
-            this.btnDeleteNote.Location = new System.Drawing.Point(387, 174);
+            this.btnDeleteNote.Location = new System.Drawing.Point(396, 155);
             this.btnDeleteNote.Name = "btnDeleteNote";
             this.btnDeleteNote.Size = new System.Drawing.Size(75, 23);
             this.btnDeleteNote.TabIndex = 8;

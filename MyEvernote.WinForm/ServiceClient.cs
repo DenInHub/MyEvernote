@@ -30,7 +30,12 @@ namespace MyEvernote.WinForm
             return notes;
         }
         
-        public User CreateUser(User user)
+        /*public void Share(Guid NoteId, Guid UserId)
+        {
+            client.GetAsync($"notes/share/{NoteId}",);
+        }*/
+
+    public User CreateUser(User user)
         {
             return client.PostAsJsonAsync($"users", user).Result.Content.ReadAsAsync<User>().Result; 
         }

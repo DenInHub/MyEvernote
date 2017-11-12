@@ -3,6 +3,7 @@ using MyEvernote.Model;
 using System.Data.SqlClient;
 using System.Data;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MyEvernote.DataLayer.SQL
 {
@@ -22,7 +23,7 @@ namespace MyEvernote.DataLayer.SQL
                 using (SqlCommand command = connection.CreateCommand())
                 {
                     note.Id = note.Id == null ? Guid.NewGuid() : note.Id; 
-                    command.CommandText = "insert into Note(Id,Title,DateCreated,Creator,Category,Text) values(@id,@title,@dateCreated,@creator,@category,@text)";
+                    command.CommandText = @"insert into Note(Id,Title,DateCreated,Creator,Category,Text) values(@id,@title,@dateCreated,@creator,@category,@text)";
                     command.Parameters.AddWithValue("@id", note.Id);
                     command.Parameters.AddWithValue("@dateCreated", DateTime.Now);
                     command.Parameters.AddWithValue("@creator", note.Creator);
@@ -34,6 +35,7 @@ namespace MyEvernote.DataLayer.SQL
             }
             return note;
         }
+
         public void Change(Note note)
         {
             using (SqlConnection connection = new SqlConnection(_ConnectionString))
@@ -66,6 +68,7 @@ namespace MyEvernote.DataLayer.SQL
                 }
             }
         }
+
         public List<Note> GetNotes(Guid UserId)
         {
             using (SqlConnection connection = new SqlConnection(_ConnectionString))
@@ -78,15 +81,15 @@ namespace MyEvernote.DataLayer.SQL
                     transaction = connection.BeginTransaction(); 
                     command.Connection = connection;
                     command.Transaction = transaction;
-                    
-                    // Первая команда - забрать основную инфорцию о заметках
-                    command.CommandText = "select * from Note where Creator = @id";
+
+                    // Первая команда - забрать основную инфорцию о заметках юзера
+                    command.CommandText = @"select * from Note where id in (select NoteId from Shared where UserId = @id)
+                                    union   select * from Note where Creator = @id";
                     command.Parameters.AddWithValue("@id", UserId);
                     using (var reader = command.ExecuteReader())
                     {
                         /*if (!reader.HasRows)
                             throw new ArgumentException($"note с Id {UserId} не найденa");*/
-
                         while (reader.Read())
                         {
                             var note = new Note
@@ -97,67 +100,45 @@ namespace MyEvernote.DataLayer.SQL
                                 Category = reader.GetGuid(reader.GetOrdinal("Category")),
                                 Text = reader.GetString(reader.GetOrdinal("Text")),
                                 Creator = reader.GetGuid(reader.GetOrdinal("Creator")),
+                                Shared = new List<Guid>()
                             };
                             Notes.Add(note);
                         }
                     }
-
-                    // забрать пошаренные заметки  
-                   /* command.CommandText = "select * from Note where id in (select NoteId from Shared where	UserId =  @id_)";
-                    command.Parameters.AddWithValue("@id_", UserId);
+                    string str ="'" + string.Join("','", Notes.Select(x => x.Id.ToString()).ToArray()) + "'";// id всех нот юзера
+                    // забрать информацию о владельцах его заметок
+                    command.CommandText = $"select * from Shared where NoteId in ({str})";
                     using (var reader = command.ExecuteReader())
                     {
+                        /*if (!reader.HasRows)
+                            throw new ArgumentException($"note с Id {UserId} не найденa");*/
                         while (reader.Read())
                         {
-                            var note = new Note
-                            {
-                                Id = reader.GetGuid(reader.GetOrdinal("Id")),
-                                Title = reader.GetString(reader.GetOrdinal("Title")),
-                                Created = reader.GetDateTime(reader.GetOrdinal("DateCreated")),
-                                Category = reader.GetGuid(reader.GetOrdinal("Category")),
-                                Text = reader.GetString(reader.GetOrdinal("Text")),
-                                Creator = reader.GetGuid(reader.GetOrdinal("Creator")),
-                            };
-                            Notes.Add(note);
-                        }
-                    }*/
+                            var noteId = reader.GetGuid(reader.GetOrdinal("NoteId"));
 
-                    /*if (Notes == null)// ЕСЛИ У ПОЛЬЗОВАТЕЛЯ нет заметок разу выходим .
-                        return Notes;*/
-
-                    // тертья команда - забрать инфорцию о владельцах заметок
-                    // забираем все айди всех нот юзера , лезем  в шаред и выбираем юзеров 
-                    command.CommandText = "select * from Shared where NoteId in (select Id from Note where Creator = @idd)";
-
-                    command.Parameters.AddWithValue("@idd", UserId);
-                    using (var reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            var i = 0;
-                            Notes[i].Shared = new List<Guid>();
-                            Notes[i].Shared.Add(reader.GetGuid(reader.GetOrdinal("UserId")));
-                            i++;
+                            Notes.Single(x => x.Id == noteId)?.Shared.Add(reader.GetGuid(reader.GetOrdinal("UserId")));
+                            
                         }
                     }
-                    // четвертая команда - забрать инфорцию об изменениях
-                    command.CommandText = "select DateChange from Changes where id in (select Id from Note where Creator = @iddd)";
-                    command.Parameters.AddWithValue("@iddd", UserId);
-                    using (var reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            var i = 0;
-                            Notes[i].Changed = reader.GetDateTime(reader.GetOrdinal("DateChange"));
-                            i++;
+
+                    // забрать инфорцию об изменениях его заметок
+                    command.CommandText = $"select * from Changes where id in ({str})";
+                     using (var reader = command.ExecuteReader())
+                     {
+                         while (reader.Read())
+                         {
+                            var noteid = reader.GetGuid(reader.GetOrdinal("Id"));
+
+                            Notes.First(x=>x.Id == noteid).Changed = reader.GetDateTime(reader.GetOrdinal("DateChange"));
                         }
-                    }
+                     }
 
                     transaction.Commit();
                     return Notes;
                 }
             }
         }
+
         public void Share(Guid NoteId , Guid UserId)
         {
             using (SqlConnection connection = new SqlConnection(_ConnectionString))
@@ -172,6 +153,7 @@ namespace MyEvernote.DataLayer.SQL
                 }
             }
         }
+
         public void Delete(Guid id)
         {
             using (SqlConnection connection = new SqlConnection(_ConnectionString))
@@ -228,15 +210,12 @@ namespace MyEvernote.DataLayer.SQL
                     command.Parameters.AddWithValue("@idd", NoteId);
                     using (var reader = command.ExecuteReader())
                     {
+                        note.Shared = new List<Guid>();
                         while (reader.Read())
                         {
-                            var i = 0;
-                            note.Shared = new List<Guid>();
                             note.Shared.Add(reader.GetGuid(reader.GetOrdinal("UserId")));
-                            i++;
                         }
                     }
-
                     // Третья команда - забрать инфорцию об изменениях
                     command.CommandText = "select DateChange from Changes where id = @iddd";
                     command.Parameters.AddWithValue("@iddd", NoteId);

@@ -14,7 +14,7 @@ namespace MyEvernote.WinForm
         {
             InitializeComponent();
 #if DEBUG
-            tBoxNameUser.Text = "1";
+            tBoxNameUser.Text = "юзер1";
 #endif
         }
         private void MainForm_Load(object sender, EventArgs e)
@@ -23,8 +23,11 @@ namespace MyEvernote.WinForm
             Variable.Users = serviceClient.GetAllUsers();
             Variable.Categories = serviceClient.GetCategories();
             Variable.activeForm = ActiveForm;
+#if DEBUG
+            btnSignIn_Click(new object(), null);
+#endif
         }
-       
+
         private void btnSignIn_Click(object sender, EventArgs e)
         {
             if (!ChBoxSignUp.Checked)//log in
