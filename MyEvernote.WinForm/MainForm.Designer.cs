@@ -82,6 +82,7 @@
             this.Controls.Add(this.tBoxNameUser);
             this.Controls.Add(this.ChBoxSignUp);
             this.Controls.Add(this.btnSignIn);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "My Evernote";

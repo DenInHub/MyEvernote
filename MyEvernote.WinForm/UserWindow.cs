@@ -90,8 +90,8 @@ namespace MyEvernote.WinForm
 
             var NoteId = Variable.Notes.Single(x => x.Title == coBoxUserNotes.Text).Id;
 
-            //MainForm.serviceClient.client.DeleteAsync($"notes/{id}");//удаляем из базы 
-            ((MainForm)Owner).serviceClient.DeleteNote(NoteId);
+            MainForm.serviceClient.client.DeleteAsync($"notes/{selectedNote.Id}");//удаляем из базы 
+
             Variable.Notes.Remove(Variable.Notes.Single(x => x.Title == coBoxUserNotes.Text));//удаляем из листа
             RefreshWindow();
             

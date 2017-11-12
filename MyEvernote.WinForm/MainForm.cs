@@ -9,7 +9,7 @@ namespace MyEvernote.WinForm
     public partial class MainForm : Form
     {
 
-        public  ServiceClient serviceClient;
+        public static ServiceClient serviceClient;
         public MainForm()
         {
             InitializeComponent();

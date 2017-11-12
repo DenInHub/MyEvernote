@@ -130,9 +130,6 @@
             this.label4.TabIndex = 11;
             this.label4.Text = "Разрешить доступ пользователям";
             // 
-            // toolTipShowInfo
-            // 
-            // 
             // NoteWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -148,10 +145,11 @@
             this.Controls.Add(this.coBoxCategory);
             this.Controls.Add(this.btnCancelCreation);
             this.Controls.Add(this.btnSaveNote);
-            this.Load += new System.EventHandler(this.NoteWindow_Load);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "NoteWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NoteWindow";
+            this.Load += new System.EventHandler(this.NoteWindow_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

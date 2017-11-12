@@ -374,3 +374,10 @@
 2017-11-12 23:10:22.3495|INFO|MyEvernote.Logger.Log|Запрос категории заметок  c ID d00c8a05-6052-4f78-b8e6-7c926b718a23
 2017-11-12 23:15:07.8443|INFO|MyEvernote.Logger.Log|Запрос всех пользователей
 2017-11-12 23:15:17.2493|INFO|MyEvernote.Logger.Log|Запрос заметок пользователя с  ID 0e7b20f0-cd93-4813-8f4c-f7de7d60e300
+2017-11-13 00:05:55.6257|INFO|MyEvernote.Logger.Log|Запрос всех пользователей
+2017-11-13 00:06:01.3259|INFO|MyEvernote.Logger.Log|Запрос заметок пользователя с  ID 0e7b20f0-cd93-4813-8f4c-f7de7d60e300
+2017-11-13 00:06:07.0202|INFO|MyEvernote.Logger.Log|Создание заметки с 1  ID 85bc4270-e8a5-4165-b1f0-715ffdd19b09
+2017-11-13 00:06:07.0773|INFO|MyEvernote.Logger.Log|заметки  с ID 85bc4270-e8a5-4165-b1f0-715ffdd19b09
+2017-11-13 00:06:10.1621|INFO|MyEvernote.Logger.Log|Удаление заметки с  ID 85bc4270-e8a5-4165-b1f0-715ffdd19b09
+2017-11-13 00:07:39.2189|INFO|MyEvernote.Logger.Log|Запрос всех пользователей
+2017-11-13 00:13:45.0649|INFO|MyEvernote.Logger.Log|Запрос всех пользователей

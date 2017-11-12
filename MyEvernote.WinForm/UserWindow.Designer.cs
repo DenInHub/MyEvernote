@@ -125,6 +125,7 @@
             this.Controls.Add(this.btnLogOut);
             this.Controls.Add(this.coBoxUserNotes);
             this.Controls.Add(this.lblNoteСhoice);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "UserWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.UserWindow_Load);
