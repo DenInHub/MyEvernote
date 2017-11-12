@@ -38,10 +38,7 @@ namespace MyEvernote.WinForm
             if (note != null)
                 MessageBox.Show(note.ShowNoteInfo(),"Note info",MessageBoxButtons.OK,MessageBoxIcon.Information);
         }
-        public static void RefreshWindow(this Note note)
-        {
-
-        }
+       
 
     }
 }

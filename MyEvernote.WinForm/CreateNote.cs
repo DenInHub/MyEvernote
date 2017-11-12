@@ -46,7 +46,7 @@ namespace MyEvernote.WinForm
         {
             InitializeComponent();
             coBoxCategory.Items.AddRange(Variable.Categories.Select(x => x.Name).ToArray()); // заполнить категории
-            checkedListBoxShared.Items.AddRange(Variable.Users.Where(x => x.Name != Variable.User.Name)?.Select(x => x.Name).ToArray());// заполнить лист бокс юзерами
+            checkedListBoxShared.Items.AddRange(Variable.Users.Where(x => x.Name != Variable.SelectedUser.Name)?.Select(x => x.Name).ToArray());// заполнить лист бокс юзерами
             toolTipShowInfo.SetToolTip(coBoxCategory, "Выбрать категории из существующего списка.\nЕсли категория не выбрана будет установлена категория по умолчанию.\nДля создания новой категории введите ее имя");
             toolTipShowInfo.SetToolTip(checkedListBoxShared,"Если пользователи не отображаются значит их нет в базе");
         }
@@ -83,7 +83,7 @@ namespace MyEvernote.WinForm
             {
                 Title = TxtBoxTitleNote.Text,
                 Text = TxtBoxTextNote.Text,
-                Creator = Variable.User.Id,
+                Creator = Variable.SelectedUser.Id,
                 Category = CategoryGuid,
                 Id = action == "create" ? Guid.NewGuid() : selectedNote.Id
             };
@@ -100,7 +100,7 @@ namespace MyEvernote.WinForm
 
 
             //---------------------- Shared
-            if (selectedNote.Shared != null)
+            if (selectedNote?.Shared != null )
                 await MainForm.serviceClient.client.DeleteAsync($"notes/share/{note.Id}");
 
             List<string> SharedName = new List<string>();

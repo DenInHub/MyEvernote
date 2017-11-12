@@ -261,3 +261,20 @@
 2017-11-12 20:30:46.2259|INFO|MyEvernote.Logger.Log|заметки  с ID 16ea2a4c-dc93-4e9e-88b5-8d016b38f63e
 2017-11-12 20:30:49.2730|INFO|MyEvernote.Logger.Log|Запрос категории заметок  c ID d698f903-5fc6-4487-a492-e0810e065527
 2017-11-12 20:30:54.3263|INFO|MyEvernote.Logger.Log|Удаление заметки с  ID 16ea2a4c-dc93-4e9e-88b5-8d016b38f63e
+2017-11-12 21:11:41.2725|INFO|MyEvernote.Logger.Log|Запрос всех пользователей
+2017-11-12 21:11:43.6031|INFO|MyEvernote.Logger.Log|Запрос заметок пользователя с  ID d7a2f5c9-81e2-4d14-9dcb-1f75f69d777f
+2017-11-12 21:12:05.6932|INFO|MyEvernote.Logger.Log|Создание категории заметок  создал c ID f4be287c-8be4-4140-bd28-5d93e900f4c4
+2017-11-12 21:12:05.8088|INFO|MyEvernote.Logger.Log|Создание заметки с создал  ID 7d0fa7a7-b77e-4402-93b5-b664b574cd5d
+2017-11-12 21:13:11.8796|INFO|MyEvernote.Logger.Log|Запрос всех пользователей
+2017-11-12 21:13:14.2921|INFO|MyEvernote.Logger.Log|Запрос заметок пользователя с  ID d7a2f5c9-81e2-4d14-9dcb-1f75f69d777f
+2017-11-12 21:13:43.6246|INFO|MyEvernote.Logger.Log|Создание заметки с создал1  ID 0552eac7-f6fe-4f4a-b30f-c2abdb1b5143
+2017-11-12 21:14:41.5627|INFO|MyEvernote.Logger.Log|Запрос всех пользователей
+2017-11-12 21:15:02.1213|INFO|MyEvernote.Logger.Log|Запрос заметок пользователя с  ID d7a2f5c9-81e2-4d14-9dcb-1f75f69d777f
+2017-11-12 21:15:05.5463|INFO|MyEvernote.Logger.Log|Удаление заметки с  ID 0552eac7-f6fe-4f4a-b30f-c2abdb1b5143
+2017-11-12 21:15:08.3090|INFO|MyEvernote.Logger.Log|Удаление заметки с  ID 7d0fa7a7-b77e-4402-93b5-b664b574cd5d
+2017-11-12 21:15:34.9180|INFO|MyEvernote.Logger.Log|Создание заметки с создал  ID f4743d59-771f-4107-8405-0e57ee06738f
+2017-11-12 21:15:35.0221|INFO|MyEvernote.Logger.Log|Расшарить заметкку f4743d59-771f-4107-8405-0e57ee06738f пользователю 2d79e127-464b-47e6-a0f5-8f17e4524b6f
+2017-11-12 21:15:35.0902|INFO|MyEvernote.Logger.Log|Расшарить заметкку f4743d59-771f-4107-8405-0e57ee06738f пользователю 691eb517-7d77-47f9-90a4-99864bbb687e
+2017-11-12 21:15:35.1257|INFO|MyEvernote.Logger.Log|заметки  с ID f4743d59-771f-4107-8405-0e57ee06738f
+2017-11-12 21:15:38.7727|INFO|MyEvernote.Logger.Log|Запрос категории заметок  c ID a24cc812-0547-464c-93fc-4aa808655997
+2017-11-12 21:15:44.2347|INFO|MyEvernote.Logger.Log|Удаление заметки с  ID f4743d59-771f-4107-8405-0e57ee06738f

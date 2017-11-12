@@ -13,10 +13,6 @@ namespace MyEvernote.WinForm
         public MainForm()
         {
             InitializeComponent();
-            toolTipShowInfo.SetToolTip(ChBoxSignUp, "Созданием нового пользователя./Имя пользователя должно быть уинкальным");
-#if DEBUG
-            tBoxNameUser.Text = "юзер1";
-#endif
         }
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -24,9 +20,11 @@ namespace MyEvernote.WinForm
             Variable.Users = serviceClient.GetAllUsers();
             Variable.Categories = serviceClient.GetCategories();
             Variable.activeForm = ActiveForm;
-/*#if DEBUG
-            btnSignIn_Click(new object(), null);
-#endif*/
+
+            toolTipShowInfo.SetToolTip(ChBoxSignUp, "Созданием нового пользователя./Имя пользователя должно быть уникальным");
+#if DEBUG
+            tBoxNameUser.Text = "юзер1";
+#endif
         }
 
         private void btnSignIn_Click(object sender, EventArgs e)
@@ -38,7 +36,7 @@ namespace MyEvernote.WinForm
                 {
                     var userWindow = new UserWindow();
                     userWindow.Owner = this;
-                    Variable.User = SelectedUser; // сохраняем юзера
+                    Variable.SelectedUser = SelectedUser; // сохраняем юзера
                     Variable.Notes = serviceClient.GetNotesOfUser(SelectedUser.Id); // сохраняем его заметки .
                     tBoxNameUser.Clear();
                     Hide();
@@ -67,7 +65,7 @@ namespace MyEvernote.WinForm
                         var userWindow = new UserWindow();
                         userWindow.Owner = this;
 
-                        Variable.User = serviceClient.CreateUser(new User { Id = Guid.NewGuid(), Name = tBoxNameUser.Text });
+                        Variable.SelectedUser = serviceClient.CreateUser(new User { Id = Guid.NewGuid(), Name = tBoxNameUser.Text });
                         Variable.Notes = new List<Note>();
                         Hide();
                         userWindow.Show();
@@ -81,11 +79,10 @@ namespace MyEvernote.WinForm
     public static class Variable // "глобальные" переменные
     {
         static public Form activeForm;
+        static public User SelectedUser;
         static public List<User> Users = new List<User>();
-        static public User User;
-        static public List<Note> Notes;
-        static public Dictionary<string,Note> NotesDictonary;
         static public List<Category> Categories;
+        static public List<Note> Notes;
         static public readonly int MainForm = 0; // индекс окна в Application.OpenForms
         static public readonly int UserWindow = 1;
     }
