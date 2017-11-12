@@ -15,7 +15,7 @@ namespace MyEvernote.WinForm
         static void Main()
         {
             Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+            Application.SetCompatibleTextRenderingDefault(false);//
             var mainForm = new MainForm();
             Application.Run(mainForm);
             

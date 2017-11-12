@@ -22,7 +22,7 @@ namespace MyEvernote.DataLayer.SQL.Tests
         [TestMethod]
         public void ShouldCreateUser()
         {
-            Log.Instance.Info("from test user");
+            Log.Instance.Info("from test user");//
             //arrange
             var user = new User
             {

@@ -9,7 +9,7 @@ namespace MyEvernote.DataLayer
 {
     public interface ICategories
     {
-        Category Create(Category category);
+        Category Create(Category category); //
         Category Get(Guid Id);
         List<Category> GetCategories();
         void Delete(Guid Id);

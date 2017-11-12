@@ -13,7 +13,7 @@ namespace MyEvernote.Api.Controllers
 {
     public class CategoriesController : ApiController
     {
-        private const string ConnectionString = @"Data Source=DESKTOP-IC679A3;Initial Catalog=MyEvernote;Integrated Security=True";
+        private const string ConnectionString = @"Data Source=DESKTOP-IC679A3;Initial Catalog=MyEvernote;Integrated Security=True"; //
         private readonly ICategories _categoriesRepository;
 
         public CategoriesController()

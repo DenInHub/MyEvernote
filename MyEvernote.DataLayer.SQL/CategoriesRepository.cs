@@ -8,7 +8,7 @@ namespace MyEvernote.DataLayer.SQL
     public class CategoriesRepository : ICategories
     {
         readonly string _ConnectionString;
-        public CategoriesRepository(string ConnectionString)
+        public CategoriesRepository(string ConnectionString) //
         {
             _ConnectionString = ConnectionString;
         }
