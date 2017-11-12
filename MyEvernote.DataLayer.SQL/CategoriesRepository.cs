@@ -19,7 +19,6 @@ namespace MyEvernote.DataLayer.SQL
                 connection.Open();
                 using (SqlCommand command = connection.CreateCommand())
                 {
-                    category.Id = Guid.NewGuid();
                     command.CommandText = "insert into Category(Id, Category) values(@id, @category)";
                     command.Parameters.AddWithValue("@id", category.Id);
                     command.Parameters.AddWithValue("@category", category.Name);

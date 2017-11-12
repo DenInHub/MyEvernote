@@ -19,29 +19,32 @@ namespace MyEvernote.WinForm
             client.BaseAddress = new Uri(connectionstring);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
+
         public List<User> GetAllUsers()
         {
             var user = client.GetAsync("users/all").Result.Content.ReadAsAsync<List<User>>().Result;
             return user;
         }
+
         public List<Note> GetNotesOfUser(Guid id)
         {
             var notes = client.GetAsync($"notes/{id}").Result.Content.ReadAsAsync<List<Note>>().Result;
             return notes;
         }
-        
-        /*public void Share(Guid NoteId, Guid UserId)
-        {
-            client.GetAsync($"notes/share/{NoteId}",);
-        }*/
 
-    public User CreateUser(User user)
+        public User CreateUser(User user)
         {
             return client.PostAsJsonAsync($"users", user).Result.Content.ReadAsAsync<User>().Result; 
         }
+
         public List<Category> GetCategories()
         {
             return client.GetAsync("Categories").Result.Content.ReadAsAsync<List<Category>>().Result;
+        }
+
+        public void DeleteNote(Guid NoteId)
+        {
+            MainForm.serviceClient.client.DeleteAsync($"notes/{NoteId}");
         }
 
     }

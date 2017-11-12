@@ -9,7 +9,7 @@ namespace MyEvernote.WinForm
     public partial class MainForm : Form
     {
 
-        public static ServiceClient serviceClient;
+        public  ServiceClient serviceClient;
         public MainForm()
         {
             InitializeComponent();
@@ -62,11 +62,12 @@ namespace MyEvernote.WinForm
                     }
                     else
                     {
+                        Variable.SelectedUser = serviceClient.CreateUser(new User { Id = Guid.NewGuid(), Name = tBoxNameUser.Text });
+                        Variable.Users.Add(Variable.SelectedUser);
+                        Variable.Notes = new List<Note>();
+
                         var userWindow = new UserWindow();
                         userWindow.Owner = this;
-
-                        Variable.SelectedUser = serviceClient.CreateUser(new User { Id = Guid.NewGuid(), Name = tBoxNameUser.Text });
-                        Variable.Notes = new List<Note>();
                         Hide();
                         userWindow.Show();
                     }
@@ -85,5 +86,6 @@ namespace MyEvernote.WinForm
         static public List<Note> Notes;
         static public readonly int MainForm = 0; // индекс окна в Application.OpenForms
         static public readonly int UserWindow = 1;
+        static public bool CommandToCreate = false;
     }
 }

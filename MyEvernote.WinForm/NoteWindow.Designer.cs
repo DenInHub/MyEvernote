@@ -1,6 +1,6 @@
 ﻿namespace MyEvernote.WinForm
 {
-    partial class CreateNote
+    partial class NoteWindow
     {
         /// <summary>
         /// Required designer variable.
@@ -133,7 +133,7 @@
             // toolTipShowInfo
             // 
             // 
-            // CreateNote
+            // NoteWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -148,9 +148,10 @@
             this.Controls.Add(this.coBoxCategory);
             this.Controls.Add(this.btnCancelCreation);
             this.Controls.Add(this.btnSaveNote);
-            this.Name = "CreateNote";
+            this.Load += new System.EventHandler(this.NoteWindow_Load);
+            this.Name = "NoteWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "CreateNote";
+            this.Text = "NoteWindow";
             this.ResumeLayout(false);
             this.PerformLayout();
 

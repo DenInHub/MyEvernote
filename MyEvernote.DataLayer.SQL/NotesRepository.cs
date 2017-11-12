@@ -108,6 +108,9 @@ namespace MyEvernote.DataLayer.SQL
                             Notes.Add(note);
                         }
                     }
+                    if (Notes.Count ==0) // ну нет заметок у юзера
+                        return Notes;
+                    
                     string str ="'" + string.Join("','", Notes.Select(x => x.Id.ToString()).ToArray()) + "'";// id всех нот юзера
                     // забрать информацию о владельцах его заметок
                     command.CommandText = $"select * from Shared where NoteId in ({str})";
