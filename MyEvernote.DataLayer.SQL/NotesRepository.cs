@@ -51,11 +51,14 @@ namespace MyEvernote.DataLayer.SQL
                     command.Transaction = transaction; 
 
                     // First command
-                    command.CommandText = "update Note set Text = @text,Title = @title  where Id = @noteId";
+                    command.CommandText = "update Note set Text = @text,Title = @title,Category = @category   where Id = @noteId";
                     command.Parameters.AddWithValue("@text" , note.Text);
                     command.Parameters.AddWithValue("@title", note.Title);
+                    command.Parameters.AddWithValue("@category", note.Category);
                     command.Parameters.AddWithValue("@noteId", note.Id);
                     command.ExecuteNonQuery();
+
+                
 
                     // Second command
                     command.CommandText = " if not exists(select Id from Changes where Id = @id) insert into Changes(Id,DateChange) values(@id,@dateChange) else update  Changes set DateChange = @dateChange where Id = @id";
@@ -232,6 +235,20 @@ namespace MyEvernote.DataLayer.SQL
 
                     transaction.Commit();
                     return note;
+                }
+            }
+        }
+
+        public void CancelShare(Guid NoteId)
+        {
+            using (SqlConnection connection = new SqlConnection(_ConnectionString))
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "delete from Shared where NoteId = @noteId";
+                    command.Parameters.AddWithValue("@noteId", NoteId);
+                    command.ExecuteNonQuery();
                 }
             }
         }

@@ -15,7 +15,8 @@ namespace MyEvernote.DataLayer
         void Change(Note note);
         void Delete(Guid id);
         void Share(Guid NoteId , Guid UserId);
-        
+        void CancelShare(Guid NoteId);
+
     }
-    
+
 }

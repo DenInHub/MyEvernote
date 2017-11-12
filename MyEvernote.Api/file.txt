@@ -201,3 +201,63 @@
 2017-11-12 16:32:30.3866|INFO|MyEvernote.Logger.Log|Запрос категории заметок  c ID 00000000-0000-0000-0000-00000000ffff
 2017-11-12 16:32:35.1575|INFO|MyEvernote.Logger.Log|Удаление заметки с  ID 15d0a40f-b851-482d-b2cb-9559976a3827
 2017-11-12 16:32:38.3753|INFO|MyEvernote.Logger.Log|Удаление заметки с  ID bfcb25af-abda-4ffb-8d03-1aa009cec159
+2017-11-12 16:42:26.1588|INFO|MyEvernote.Logger.Log|Запрос всех пользователей
+2017-11-12 16:42:28.8725|INFO|MyEvernote.Logger.Log|Запрос заметок пользователя с  ID d7a2f5c9-81e2-4d14-9dcb-1f75f69d777f
+2017-11-12 17:09:30.6510|INFO|MyEvernote.Logger.Log|Запрос всех пользователей
+2017-11-12 17:09:32.8668|INFO|MyEvernote.Logger.Log|Запрос заметок пользователя с  ID d7a2f5c9-81e2-4d14-9dcb-1f75f69d777f
+2017-11-12 17:14:21.9249|INFO|MyEvernote.Logger.Log|Запрос всех пользователей
+2017-11-12 17:14:24.0979|INFO|MyEvernote.Logger.Log|Запрос заметок пользователя с  ID d7a2f5c9-81e2-4d14-9dcb-1f75f69d777f
+2017-11-12 17:14:47.9376|INFO|MyEvernote.Logger.Log|Создание категории заметок  изменил категорию c ID a4f9ad3c-5f35-4c57-be51-2b4ae69a4fff
+2017-11-12 17:14:47.9862|INFO|MyEvernote.Logger.Log|Изменение заметки с изменил имя   ID 16ea2a4c-dc93-4e9e-88b5-8d016b38f63e
+2017-11-12 17:14:48.0202|INFO|MyEvernote.Logger.Log|заметки  с ID 16ea2a4c-dc93-4e9e-88b5-8d016b38f63e
+2017-11-12 17:15:03.1021|INFO|MyEvernote.Logger.Log|Запрос категории заметок  c ID 00000000-0000-0000-0000-00000000ffff
+2017-11-12 17:30:20.7882|INFO|MyEvernote.Logger.Log|Запрос всех пользователей
+2017-11-12 17:30:28.0958|INFO|MyEvernote.Logger.Log|Запрос заметок пользователя с  ID d7a2f5c9-81e2-4d14-9dcb-1f75f69d777f
+2017-11-12 17:30:31.7201|INFO|MyEvernote.Logger.Log|Запрос категории заметок  c ID 00000000-0000-0000-0000-00000000ffff
+2017-11-12 17:31:48.2755|INFO|MyEvernote.Logger.Log|Создание категории заметок  111 c ID 044441f9-74c3-4551-9e00-812c4060e3fa
+2017-11-12 17:32:49.1467|INFO|MyEvernote.Logger.Log|Изменение заметки с 111  ID 16ea2a4c-dc93-4e9e-88b5-8d016b38f63e
+2017-11-12 19:42:30.3131|INFO|MyEvernote.Logger.Log|Запрос всех пользователей
+2017-11-12 19:42:34.2075|INFO|MyEvernote.Logger.Log|Запрос заметок пользователя с  ID d7a2f5c9-81e2-4d14-9dcb-1f75f69d777f
+2017-11-12 19:44:29.7210|INFO|MyEvernote.Logger.Log|Создание категории заметок  0 c ID e481e8e4-9745-4bd9-9e1b-ebc5332950ee
+2017-11-12 19:44:29.8016|INFO|MyEvernote.Logger.Log|Изменение заметки с 0  ID 16ea2a4c-dc93-4e9e-88b5-8d016b38f63e
+2017-11-12 19:44:29.8376|INFO|MyEvernote.Logger.Log|заметки  с ID 16ea2a4c-dc93-4e9e-88b5-8d016b38f63e
+2017-11-12 19:44:52.7146|INFO|MyEvernote.Logger.Log|Запрос всех пользователей
+2017-11-12 19:45:07.0273|INFO|MyEvernote.Logger.Log|Запрос заметок пользователя с  ID d7a2f5c9-81e2-4d14-9dcb-1f75f69d777f
+2017-11-12 19:46:01.1455|INFO|MyEvernote.Logger.Log|Запрос всех пользователей
+2017-11-12 19:46:07.9839|INFO|MyEvernote.Logger.Log|Запрос заметок пользователя с  ID d7a2f5c9-81e2-4d14-9dcb-1f75f69d777f
+2017-11-12 19:47:40.2485|INFO|MyEvernote.Logger.Log|Создание категории заметок  1 c ID f3215702-8295-4025-9437-fa5b7f37b31c
+2017-11-12 19:50:13.0364|INFO|MyEvernote.Logger.Log|Запрос всех пользователей
+2017-11-12 19:50:32.7949|INFO|MyEvernote.Logger.Log|Запрос заметок пользователя с  ID d7a2f5c9-81e2-4d14-9dcb-1f75f69d777f
+2017-11-12 19:50:57.9998|INFO|MyEvernote.Logger.Log|Изменение заметки с 1  ID 16ea2a4c-dc93-4e9e-88b5-8d016b38f63e
+2017-11-12 19:54:36.3926|INFO|MyEvernote.Logger.Log|Запрос всех пользователей
+2017-11-12 19:54:45.1174|INFO|MyEvernote.Logger.Log|Запрос заметок пользователя с  ID d7a2f5c9-81e2-4d14-9dcb-1f75f69d777f
+2017-11-12 19:54:47.7048|INFO|MyEvernote.Logger.Log|Запрос категории заметок  c ID d698f903-5fc6-4487-a492-e0810e065527
+2017-11-12 19:55:15.5861|INFO|MyEvernote.Logger.Log|Изменение заметки с 2  ID 16ea2a4c-dc93-4e9e-88b5-8d016b38f63e
+2017-11-12 19:55:15.7212|INFO|MyEvernote.Logger.Log|Расшарить заметкку 16ea2a4c-dc93-4e9e-88b5-8d016b38f63e пользователю 691eb517-7d77-47f9-90a4-99864bbb687e
+2017-11-12 19:55:58.9095|INFO|MyEvernote.Logger.Log|Запрос всех пользователей
+2017-11-12 19:56:01.5734|INFO|MyEvernote.Logger.Log|Запрос заметок пользователя с  ID d7a2f5c9-81e2-4d14-9dcb-1f75f69d777f
+2017-11-12 19:56:14.2014|INFO|MyEvernote.Logger.Log|Изменение заметки с 3  ID 16ea2a4c-dc93-4e9e-88b5-8d016b38f63e
+2017-11-12 19:56:14.2625|INFO|MyEvernote.Logger.Log|заметки  с ID 16ea2a4c-dc93-4e9e-88b5-8d016b38f63e
+2017-11-12 19:56:17.5788|INFO|MyEvernote.Logger.Log|Запрос категории заметок  c ID d698f903-5fc6-4487-a492-e0810e065527
+2017-11-12 20:20:35.9394|INFO|MyEvernote.Logger.Log|Запрос всех пользователей
+2017-11-12 20:21:52.2264|INFO|MyEvernote.Logger.Log|Запрос всех пользователей
+2017-11-12 20:22:47.2382|INFO|MyEvernote.Logger.Log|Запрос всех пользователей
+2017-11-12 20:25:12.4083|INFO|MyEvernote.Logger.Log|Запрос всех пользователей
+2017-11-12 20:25:20.6394|INFO|MyEvernote.Logger.Log|Запрос заметок пользователя с  ID d7a2f5c9-81e2-4d14-9dcb-1f75f69d777f
+2017-11-12 20:25:45.2335|INFO|MyEvernote.Logger.Log|Запрос категории заметок  c ID d698f903-5fc6-4487-a492-e0810e065527
+2017-11-12 20:26:00.5160|INFO|MyEvernote.Logger.Log|Запрос всех пользователей
+2017-11-12 20:26:21.9197|INFO|MyEvernote.Logger.Log|Запрос заметок пользователя с  ID d7a2f5c9-81e2-4d14-9dcb-1f75f69d777f
+2017-11-12 20:26:24.8703|INFO|MyEvernote.Logger.Log|Запрос категории заметок  c ID d698f903-5fc6-4487-a492-e0810e065527
+2017-11-12 20:26:32.3389|INFO|MyEvernote.Logger.Log|Изменение заметки с 3  ID 16ea2a4c-dc93-4e9e-88b5-8d016b38f63e
+2017-11-12 20:26:32.4946|INFO|MyEvernote.Logger.Log|заметки  с ID 16ea2a4c-dc93-4e9e-88b5-8d016b38f63e
+2017-11-12 20:30:26.0814|INFO|MyEvernote.Logger.Log|Запрос всех пользователей
+2017-11-12 20:30:29.6265|INFO|MyEvernote.Logger.Log|Запрос заметок пользователя с  ID d7a2f5c9-81e2-4d14-9dcb-1f75f69d777f
+2017-11-12 20:30:36.0128|INFO|MyEvernote.Logger.Log|Изменение заметки с 3  ID 16ea2a4c-dc93-4e9e-88b5-8d016b38f63e
+2017-11-12 20:30:36.1635|INFO|MyEvernote.Logger.Log|заметки  с ID 16ea2a4c-dc93-4e9e-88b5-8d016b38f63e
+2017-11-12 20:30:38.8907|INFO|MyEvernote.Logger.Log|Запрос категории заметок  c ID d698f903-5fc6-4487-a492-e0810e065527
+2017-11-12 20:30:45.9981|INFO|MyEvernote.Logger.Log|Изменение заметки с 3  ID 16ea2a4c-dc93-4e9e-88b5-8d016b38f63e
+2017-11-12 20:30:46.1273|INFO|MyEvernote.Logger.Log|Расшарить заметкку 16ea2a4c-dc93-4e9e-88b5-8d016b38f63e пользователю 2d79e127-464b-47e6-a0f5-8f17e4524b6f
+2017-11-12 20:30:46.1933|INFO|MyEvernote.Logger.Log|Расшарить заметкку 16ea2a4c-dc93-4e9e-88b5-8d016b38f63e пользователю 691eb517-7d77-47f9-90a4-99864bbb687e
+2017-11-12 20:30:46.2259|INFO|MyEvernote.Logger.Log|заметки  с ID 16ea2a4c-dc93-4e9e-88b5-8d016b38f63e
+2017-11-12 20:30:49.2730|INFO|MyEvernote.Logger.Log|Запрос категории заметок  c ID d698f903-5fc6-4487-a492-e0810e065527
+2017-11-12 20:30:54.3263|INFO|MyEvernote.Logger.Log|Удаление заметки с  ID 16ea2a4c-dc93-4e9e-88b5-8d016b38f63e

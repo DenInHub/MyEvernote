@@ -12,14 +12,14 @@ namespace MyEvernote.WinForm
    
     public partial class CreateNote : Form
     {
-            string action;
-
+        string action;
+        Note selectedNote;
+        int index;
         public CreateNote(Button btn , Form own) : this() 
         {
             if (btn.Name == "btnCreateNote")
             {
-                coBoxCategory.Items.AddRange(Variable.Categories.Select(x => x.Name).ToArray()); // заполнить категории
-                checkedListBoxShared.Items.AddRange(Variable.Users.Where(x => x.Name != Variable.User.Name)?.Select(x => x.Name).ToArray());// заполнить лист бокс юзерами*/
+                
                 action = "create";
                 Owner = own;
             }
@@ -27,12 +27,12 @@ namespace MyEvernote.WinForm
             {
                 Owner = own;
                 action = "change";
-                var selectedNote = ((UserWindow)Owner).selectedNote;
+
+
+                selectedNote = ((UserWindow)Owner).selectedNote;
                 coBoxCategory.Text = Variable.Categories.First(x => x.Id == selectedNote.Category).Name;
                 TxtBoxTitleNote.Text = selectedNote.Title;
                 TxtBoxTextNote.Text = selectedNote.Text;
-                //кому пошарена 
-                checkedListBoxShared.Items.AddRange(Variable.Users.Where(x => x.Name != Variable.User.Name)?.Select(x => x.Name).ToArray()); // добавить всех юзеров
                 // чекнуть тех кому пошарена
                 foreach (var UserId in selectedNote.Shared)
                 {
@@ -45,6 +45,8 @@ namespace MyEvernote.WinForm
         public CreateNote() 
         {
             InitializeComponent();
+            coBoxCategory.Items.AddRange(Variable.Categories.Select(x => x.Name).ToArray()); // заполнить категории
+            checkedListBoxShared.Items.AddRange(Variable.Users.Where(x => x.Name != Variable.User.Name)?.Select(x => x.Name).ToArray());// заполнить лист бокс юзерами
             toolTipShowInfo.SetToolTip(coBoxCategory, "Выбрать категории из существующего списка.\nЕсли категория не выбрана будет установлена категория по умолчанию.\nДля создания новой категории введите ее имя");
             toolTipShowInfo.SetToolTip(checkedListBoxShared,"Если пользователи не отображаются значит их нет в базе");
         }
@@ -57,8 +59,9 @@ namespace MyEvernote.WinForm
 
         private  async void btnSaveNote_Click(object sender, EventArgs e)
         {
-            
-            if (string.IsNullOrEmpty(TxtBoxTitleNote.Text) || Variable.Notes.Exists(x => x.Title == TxtBoxTitleNote.Text))
+            index = Variable.Notes.IndexOf(selectedNote);
+
+            if ((string.IsNullOrEmpty(TxtBoxTitleNote.Text) || Variable.Notes.Exists(x => x.Title == TxtBoxTitleNote.Text))&&action == "create")
             {
                 MessageBox.Show($"нет имени заметки или такое имя уже есть", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -82,16 +85,24 @@ namespace MyEvernote.WinForm
                 Text = TxtBoxTextNote.Text,
                 Creator = Variable.User.Id,
                 Category = CategoryGuid,
-                Id = Guid.NewGuid()
+                Id = action == "create" ? Guid.NewGuid() : selectedNote.Id
             };
 
+            if (action == "create")
+            {
+                // Create Note
+                await MainForm.serviceClient.client.PostAsJsonAsync($"notes", note);
+            }
+            else
+            {   // Change Note
+                await MainForm.serviceClient.client.PostAsJsonAsync($"notes/{note.Id}", note);
+            }
 
-            //---------------------- Create Note
-            await MainForm.serviceClient.client.PostAsJsonAsync($"notes", note);
-            //---------------------- Create Note
 
             //---------------------- Shared
-            //List<Guid> SharedGuid = new List<Guid>();
+            if (selectedNote.Shared != null)
+                await MainForm.serviceClient.client.DeleteAsync($"notes/share/{note.Id}");
+
             List<string> SharedName = new List<string>();
             SharedName.AddRange(checkedListBoxShared.CheckedItems.Cast<string>().ToArray()); // забрать имена юзеров из checkedListBoxShared
 
@@ -103,11 +114,18 @@ namespace MyEvernote.WinForm
                 StringContent content = new StringContent(string.Empty);
                 await MainForm.serviceClient.client.PostAsJsonAsync($"notes/share/{note.Id}/{UserId}", content); // 
             }
-
-            //---------------------- Shared
+            
+            
+            
+            //---------------------- END Shared
 
             //ЗАБРАТЬ ИЗ БАЗЫ
-            Variable.Notes.Add(MainForm.serviceClient.client.GetAsync($"note/{note.Id}").Result.Content.ReadAsAsync<Note>().Result);
+
+            if (action == "create")
+                Variable.Notes.Add(MainForm.serviceClient.client.GetAsync($"note/{note.Id}").Result.Content.ReadAsAsync<Note>().Result);
+            else
+                Variable.Notes[index] = MainForm.serviceClient.client.GetAsync($"note/{note.Id}").Result.Content.ReadAsAsync<Note>().Result;
+            
 
             ((UserWindow)Owner).RefreshWindow();
 

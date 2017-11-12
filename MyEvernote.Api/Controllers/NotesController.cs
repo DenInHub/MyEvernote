@@ -61,6 +61,12 @@ namespace MyEvernote.Api.Controllers
             _notesRepository.Delete(id);
         }
 
+        [HttpDelete]
+        [Route("api/notes/share/{NoteId}")]
+        public void CancelShare(Guid NoteId)
+        {
+            _notesRepository.CancelShare(NoteId);
+        }
 
         [HttpPost]
         [Route("api/notes/share/{NoteId}/{UserId}")]
