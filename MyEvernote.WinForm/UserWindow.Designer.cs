@@ -31,7 +31,7 @@
             this.lblNoteСhoice = new System.Windows.Forms.Label();
             this.coBoxUserNotes = new System.Windows.Forms.ComboBox();
             this.btnLogOut = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
+            this.btnChange = new System.Windows.Forms.Button();
             this.btnViewInfo = new System.Windows.Forms.Button();
             this.tBoxNoteText = new System.Windows.Forms.RichTextBox();
             this.btnCreateNote = new System.Windows.Forms.Button();
@@ -66,15 +66,15 @@
             this.btnLogOut.UseVisualStyleBackColor = true;
             this.btnLogOut.Click += new System.EventHandler(this.btnLogOut_Click);
             // 
-            // btnSave
+            // btnChange
             // 
-            this.btnSave.Location = new System.Drawing.Point(186, 155);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 4;
-            this.btnSave.Text = "Изменить";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.btnChange.Location = new System.Drawing.Point(186, 155);
+            this.btnChange.Name = "btnChange";
+            this.btnChange.Size = new System.Drawing.Size(75, 23);
+            this.btnChange.TabIndex = 4;
+            this.btnChange.Text = "Изменить";
+            this.btnChange.UseVisualStyleBackColor = true;
+            this.btnChange.Click += new System.EventHandler(this.btnChange_Click);
             // 
             // btnViewInfo
             // 
@@ -121,7 +121,7 @@
             this.Controls.Add(this.btnCreateNote);
             this.Controls.Add(this.tBoxNoteText);
             this.Controls.Add(this.btnViewInfo);
-            this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.btnChange);
             this.Controls.Add(this.btnLogOut);
             this.Controls.Add(this.coBoxUserNotes);
             this.Controls.Add(this.lblNoteСhoice);
@@ -140,7 +140,7 @@
         private System.Windows.Forms.Label lblNoteСhoice;
         private System.Windows.Forms.ComboBox coBoxUserNotes;
         private System.Windows.Forms.Button btnLogOut;
-        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnChange;
         private System.Windows.Forms.Button btnViewInfo;
         private System.Windows.Forms.RichTextBox tBoxNoteText;
         private System.Windows.Forms.Button btnCreateNote;

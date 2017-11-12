@@ -28,16 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnSignIn = new System.Windows.Forms.Button();
             this.ChBoxSignUp = new System.Windows.Forms.CheckBox();
             this.tBoxNameUser = new System.Windows.Forms.TextBox();
             this.lblName = new System.Windows.Forms.Label();
+            this.toolTipShowInfo = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // btnSignIn
             // 
             this.btnSignIn.DialogResult = System.Windows.Forms.DialogResult.No;
-            this.btnSignIn.Location = new System.Drawing.Point(113, 146);
+            this.btnSignIn.Location = new System.Drawing.Point(110, 118);
             this.btnSignIn.Name = "btnSignIn";
             this.btnSignIn.Size = new System.Drawing.Size(75, 23);
             this.btnSignIn.TabIndex = 1;
@@ -48,7 +50,7 @@
             // ChBoxSignUp
             // 
             this.ChBoxSignUp.AutoSize = true;
-            this.ChBoxSignUp.Location = new System.Drawing.Point(208, 150);
+            this.ChBoxSignUp.Location = new System.Drawing.Point(203, 95);
             this.ChBoxSignUp.Name = "ChBoxSignUp";
             this.ChBoxSignUp.Size = new System.Drawing.Size(64, 17);
             this.ChBoxSignUp.TabIndex = 3;
@@ -57,7 +59,7 @@
             // 
             // tBoxNameUser
             // 
-            this.tBoxNameUser.Location = new System.Drawing.Point(99, 72);
+            this.tBoxNameUser.Location = new System.Drawing.Point(97, 92);
             this.tBoxNameUser.Name = "tBoxNameUser";
             this.tBoxNameUser.Size = new System.Drawing.Size(100, 20);
             this.tBoxNameUser.TabIndex = 4;
@@ -65,11 +67,11 @@
             // lblName
             // 
             this.lblName.AutoSize = true;
-            this.lblName.Location = new System.Drawing.Point(37, 75);
+            this.lblName.Location = new System.Drawing.Point(94, 76);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(35, 13);
+            this.lblName.Size = new System.Drawing.Size(103, 13);
             this.lblName.TabIndex = 6;
-            this.lblName.Text = "Name";
+            this.lblName.Text = "Имя пользователя";
             // 
             // MainForm
             // 
@@ -95,6 +97,7 @@
         public System.Windows.Forms.CheckBox ChBoxSignUp;
         private System.Windows.Forms.TextBox tBoxNameUser;
         private System.Windows.Forms.Label lblName;
+        private System.Windows.Forms.ToolTip toolTipShowInfo;
     }
 }
 

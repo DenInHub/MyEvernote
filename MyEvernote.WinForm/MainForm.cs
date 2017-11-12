@@ -13,6 +13,7 @@ namespace MyEvernote.WinForm
         public MainForm()
         {
             InitializeComponent();
+            toolTipShowInfo.SetToolTip(ChBoxSignUp, "Созданием нового пользователя./Имя пользователя должно быть уинкальным");
 #if DEBUG
             tBoxNameUser.Text = "юзер1";
 #endif
@@ -23,9 +24,9 @@ namespace MyEvernote.WinForm
             Variable.Users = serviceClient.GetAllUsers();
             Variable.Categories = serviceClient.GetCategories();
             Variable.activeForm = ActiveForm;
-#if DEBUG
+/*#if DEBUG
             btnSignIn_Click(new object(), null);
-#endif
+#endif*/
         }
 
         private void btnSignIn_Click(object sender, EventArgs e)

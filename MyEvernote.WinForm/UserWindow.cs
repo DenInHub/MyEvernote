@@ -43,22 +43,13 @@ namespace MyEvernote.WinForm
             selectedNote.ShowNoteInfoBox();
         }
 
-        private async void btnSave_Click(object sender, EventArgs e)
+        private async void btnChange_Click(object sender, EventArgs e)
         {
             if (selectedNote == null)
                 return;
-            // зпомнить индекс для следующего обновления списка заметок
-            var i = Variable.Notes.IndexOf(selectedNote);
-            // заносим изменения в локальную переменную
-            selectedNote.Title = coBoxUserNotes.Text;
-            selectedNote.Text = tBoxNoteText.Text;
-            // заносим в базу 
-            await MainForm.serviceClient.client.PostAsJsonAsync($"notes/{selectedNote.Id}", selectedNote);// потому что следующий метод иногда выполняется быстрее
-            selectedNote = MainForm.serviceClient.client.GetAsync($"note/{selectedNote.Id}").Result.Content.ReadAsAsync<Note>().Result;// возвращаем из базы
-            // обновление списка
-            Variable.Notes[i] = selectedNote;
-            RefreshWindow();
-            
+            btnCreateNote_Click(sender, null);
+
+         
         }
 
         private void btnLogOut_Click(object sender, EventArgs e)
@@ -69,8 +60,8 @@ namespace MyEvernote.WinForm
 
         private void btnCreateNote_Click(object sender, EventArgs e)
         {
-            var CreateNoteWindow = new CreateNote();
-            CreateNoteWindow.Owner = this;
+            var CreateNoteWindow = new CreateNote((sender as Button),this);
+            //CreateNoteWindow.Owner = this;
             Hide();
             CreateNoteWindow.Show();
         }
