@@ -8,22 +8,20 @@ namespace MyEvernote.WinForm
 {
     public partial class MainForm : Form
     {
-
-        public static ServiceClient serviceClient;
         public MainForm()
         {
             InitializeComponent();
         }
         private void MainForm_Load(object sender, EventArgs e)
         {
-            serviceClient = new ServiceClient("http://localhost:36932/api/");
-            Variable.Users = serviceClient.GetAllUsers();
-            Variable.Categories = serviceClient.GetCategories();
+            //ServiceClient.client = new ServiceClient();
+            Variable.Users = ServiceClient.GetAllUsers();
+            Variable.Categories = ServiceClient.GetCategories();
             Variable.activeForm = ActiveForm;
 
-            toolTipShowInfo.SetToolTip(ChBoxSignUp, "Созданием нового пользователя./Имя пользователя должно быть уникальным");
+            toolTipShowInfo.SetToolTip(ChBoxSignUp, "Создание нового пользователя./Имя пользователя должно быть уникальным");
 #if DEBUG
-            tBoxNameUser.Text = "юзер1";
+            tBoxNameUser.Text = "1";
 #endif
         }
 
@@ -37,7 +35,7 @@ namespace MyEvernote.WinForm
                     var userWindow = new UserWindow();
                     userWindow.Owner = this;
                     Variable.SelectedUser = SelectedUser; // сохраняем юзера
-                    Variable.Notes = serviceClient.GetNotesOfUser(SelectedUser.Id); // сохраняем его заметки .
+                    Variable.Notes = ServiceClient.GetNotesOfUser(SelectedUser.Id); // сохраняем его заметки .
                     tBoxNameUser.Clear();
                     Hide();
                     userWindow.Show();    
@@ -62,7 +60,7 @@ namespace MyEvernote.WinForm
                     }
                     else
                     {
-                        Variable.SelectedUser = serviceClient.CreateUser(new User { Id = Guid.NewGuid(), Name = tBoxNameUser.Text });
+                        Variable.SelectedUser = ServiceClient.CreateUser(new User { Id = Guid.NewGuid(), Name = tBoxNameUser.Text });
                         Variable.Users.Add(Variable.SelectedUser);
                         Variable.Notes = new List<Note>();
 

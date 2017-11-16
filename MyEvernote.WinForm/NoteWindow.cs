@@ -65,7 +65,7 @@ namespace MyEvernote.WinForm
                 {
                     Category NewCategory = new Category { Id = Guid.NewGuid(), Name = coBoxCategory.Text };
                     Variable.Categories.Add(NewCategory);
-                    CategoryGuid = MainForm.serviceClient.client.PostAsJsonAsync("Categories/", NewCategory).Result.Content.ReadAsAsync<Category>().Result.Id;
+                    CategoryGuid = ServiceClient.CreateCategory(NewCategory).Id;
                 }
             }
             //---------------------- END CategoryGuid
@@ -83,16 +83,16 @@ namespace MyEvernote.WinForm
 
             if (Variable.CommandToCreate)
                 // Create Note
-                await MainForm.serviceClient.client.PostAsJsonAsync($"notes", note);
+                await ServiceClient.CreateNote(note);
             else
-               // Change Note
-                await MainForm.serviceClient.client.PostAsJsonAsync($"notes/{note.Id}", note);
+                // Change Note
+                await ServiceClient.ChangeNote(note);
             //---------------------- END Create Note
 
 
             //---------------------- Shared
             if (selectedNote?.Shared != null )
-                await MainForm.serviceClient.client.DeleteAsync($"notes/share/{note.Id}");
+                ServiceClient.CancelShare(note.Id);
 
             List<string> SharedName = new List<string>();
             SharedName.AddRange(checkedListBoxShared.CheckedItems.Cast<string>().ToArray()); // забрать имена юзеров из checkedListBoxShared
@@ -102,17 +102,18 @@ namespace MyEvernote.WinForm
             foreach (var UserName in SharedName)
             {
                 var UserId = Variable.Users.First(x => x.Name == UserName).Id; // найти соответствие в users и забрать guid
-                StringContent content = new StringContent(string.Empty);
-                await MainForm.serviceClient.client.PostAsJsonAsync($"notes/share/{note.Id}/{UserId}", content); // 
+                ServiceClient.ShareNote(note.Id, UserId);   
+
             }
             //---------------------- END Shared
 
             //---------------------- Забрать из базы
 
             if (Variable.CommandToCreate)
-                Variable.Notes.Add(MainForm.serviceClient.client.GetAsync($"note/{note.Id}").Result.Content.ReadAsAsync<Note>().Result);
+                Variable.Notes.Add(ServiceClient.GetNote(note.Id));
             else
-                Variable.Notes[index] = MainForm.serviceClient.client.GetAsync($"note/{note.Id}").Result.Content.ReadAsAsync<Note>().Result;
+                Variable.Notes[index] = ServiceClient.GetNote(note.Id);
+
             //------------------ END Забрать из базы
 
             ((UserWindow)Owner).RefreshWindow();

@@ -44,7 +44,7 @@
             // 
             // btnSaveNote
             // 
-            this.btnSaveNote.Location = new System.Drawing.Point(405, 193);
+            this.btnSaveNote.Location = new System.Drawing.Point(275, 242);
             this.btnSaveNote.Name = "btnSaveNote";
             this.btnSaveNote.Size = new System.Drawing.Size(75, 23);
             this.btnSaveNote.TabIndex = 0;
@@ -54,7 +54,7 @@
             // 
             // btnCancelCreation
             // 
-            this.btnCancelCreation.Location = new System.Drawing.Point(486, 193);
+            this.btnCancelCreation.Location = new System.Drawing.Point(356, 242);
             this.btnCancelCreation.Name = "btnCancelCreation";
             this.btnCancelCreation.Size = new System.Drawing.Size(75, 23);
             this.btnCancelCreation.TabIndex = 1;
@@ -65,14 +65,14 @@
             // coBoxCategory
             // 
             this.coBoxCategory.FormattingEnabled = true;
-            this.coBoxCategory.Location = new System.Drawing.Point(295, 27);
+            this.coBoxCategory.Location = new System.Drawing.Point(0, 75);
             this.coBoxCategory.Name = "coBoxCategory";
             this.coBoxCategory.Size = new System.Drawing.Size(121, 21);
             this.coBoxCategory.TabIndex = 2;
             // 
             // TxtBoxTitleNote
             // 
-            this.TxtBoxTitleNote.Location = new System.Drawing.Point(139, 25);
+            this.TxtBoxTitleNote.Location = new System.Drawing.Point(0, 25);
             this.TxtBoxTitleNote.Name = "TxtBoxTitleNote";
             this.TxtBoxTitleNote.Size = new System.Drawing.Size(127, 23);
             this.TxtBoxTitleNote.TabIndex = 3;
@@ -80,16 +80,16 @@
             // 
             // TxtBoxTextNote
             // 
-            this.TxtBoxTextNote.Location = new System.Drawing.Point(0, 91);
+            this.TxtBoxTextNote.Location = new System.Drawing.Point(144, 25);
             this.TxtBoxTextNote.Name = "TxtBoxTextNote";
-            this.TxtBoxTextNote.Size = new System.Drawing.Size(561, 96);
+            this.TxtBoxTextNote.Size = new System.Drawing.Size(287, 211);
             this.TxtBoxTextNote.TabIndex = 4;
             this.TxtBoxTextNote.Text = "";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(187, 9);
+            this.label1.Location = new System.Drawing.Point(48, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(29, 13);
             this.label1.TabIndex = 5;
@@ -98,7 +98,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(266, 75);
+            this.label2.Location = new System.Drawing.Point(256, 9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(37, 13);
             this.label2.TabIndex = 7;
@@ -107,7 +107,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(328, 11);
+            this.label3.Location = new System.Drawing.Point(33, 59);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(60, 13);
             this.label3.TabIndex = 9;
@@ -116,7 +116,7 @@
             // checkedListBoxShared
             // 
             this.checkedListBoxShared.FormattingEnabled = true;
-            this.checkedListBoxShared.Location = new System.Drawing.Point(0, 231);
+            this.checkedListBoxShared.Location = new System.Drawing.Point(8, 142);
             this.checkedListBoxShared.Name = "checkedListBoxShared";
             this.checkedListBoxShared.Size = new System.Drawing.Size(119, 94);
             this.checkedListBoxShared.TabIndex = 10;
@@ -124,17 +124,17 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(-3, 215);
+            this.label4.Location = new System.Drawing.Point(18, 126);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(182, 13);
+            this.label4.Size = new System.Drawing.Size(103, 13);
             this.label4.TabIndex = 11;
-            this.label4.Text = "Разрешить доступ пользователям";
+            this.label4.Text = "Разрешить доступ:";
             // 
             // NoteWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(561, 411);
+            this.ClientSize = new System.Drawing.Size(436, 270);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.checkedListBoxShared);
             this.Controls.Add(this.label3);

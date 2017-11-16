@@ -29,13 +29,18 @@
         private void InitializeComponent()
         {
             this.lblNoteСhoice = new System.Windows.Forms.Label();
-            this.coBoxUserNotes = new System.Windows.Forms.ComboBox();
             this.btnLogOut = new System.Windows.Forms.Button();
             this.btnChange = new System.Windows.Forms.Button();
             this.btnViewInfo = new System.Windows.Forms.Button();
             this.tBoxNoteText = new System.Windows.Forms.RichTextBox();
             this.btnCreateNote = new System.Windows.Forms.Button();
             this.btnDeleteNote = new System.Windows.Forms.Button();
+            this.listBoxNotesOfUser = new System.Windows.Forms.ListBox();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblNoteСhoice
@@ -47,18 +52,9 @@
             this.lblNoteСhoice.TabIndex = 0;
             this.lblNoteСhoice.Text = "Выбор заметки";
             // 
-            // coBoxUserNotes
-            // 
-            this.coBoxUserNotes.FormattingEnabled = true;
-            this.coBoxUserNotes.Location = new System.Drawing.Point(16, 29);
-            this.coBoxUserNotes.Name = "coBoxUserNotes";
-            this.coBoxUserNotes.Size = new System.Drawing.Size(121, 21);
-            this.coBoxUserNotes.TabIndex = 1;
-            this.coBoxUserNotes.SelectedIndexChanged += new System.EventHandler(this.coBoxUserNotes_SelectedIndexChanged);
-            // 
             // btnLogOut
             // 
-            this.btnLogOut.Location = new System.Drawing.Point(387, 426);
+            this.btnLogOut.Location = new System.Drawing.Point(215, 228);
             this.btnLogOut.Name = "btnLogOut";
             this.btnLogOut.Size = new System.Drawing.Size(75, 23);
             this.btnLogOut.TabIndex = 3;
@@ -68,7 +64,7 @@
             // 
             // btnChange
             // 
-            this.btnChange.Location = new System.Drawing.Point(186, 155);
+            this.btnChange.Location = new System.Drawing.Point(108, 181);
             this.btnChange.Name = "btnChange";
             this.btnChange.Size = new System.Drawing.Size(75, 23);
             this.btnChange.TabIndex = 4;
@@ -78,7 +74,7 @@
             // 
             // btnViewInfo
             // 
-            this.btnViewInfo.Location = new System.Drawing.Point(299, 155);
+            this.btnViewInfo.Location = new System.Drawing.Point(3, 181);
             this.btnViewInfo.Name = "btnViewInfo";
             this.btnViewInfo.Size = new System.Drawing.Size(75, 23);
             this.btnViewInfo.TabIndex = 5;
@@ -88,17 +84,17 @@
             // 
             // tBoxNoteText
             // 
-            this.tBoxNoteText.Location = new System.Drawing.Point(186, 29);
+            this.tBoxNoteText.Location = new System.Drawing.Point(3, 0);
             this.tBoxNoteText.Name = "tBoxNoteText";
-            this.tBoxNoteText.Size = new System.Drawing.Size(285, 120);
+            this.tBoxNoteText.Size = new System.Drawing.Size(284, 175);
             this.tBoxNoteText.TabIndex = 6;
             this.tBoxNoteText.Text = "";
             // 
             // btnCreateNote
             // 
-            this.btnCreateNote.Location = new System.Drawing.Point(16, 126);
+            this.btnCreateNote.Location = new System.Drawing.Point(30, 181);
             this.btnCreateNote.Name = "btnCreateNote";
-            this.btnCreateNote.Size = new System.Drawing.Size(75, 23);
+            this.btnCreateNote.Size = new System.Drawing.Size(75, 25);
             this.btnCreateNote.TabIndex = 7;
             this.btnCreateNote.Text = "Создать";
             this.btnCreateNote.UseVisualStyleBackColor = true;
@@ -106,7 +102,7 @@
             // 
             // btnDeleteNote
             // 
-            this.btnDeleteNote.Location = new System.Drawing.Point(396, 155);
+            this.btnDeleteNote.Location = new System.Drawing.Point(212, 181);
             this.btnDeleteNote.Name = "btnDeleteNote";
             this.btnDeleteNote.Size = new System.Drawing.Size(75, 23);
             this.btnDeleteNote.TabIndex = 8;
@@ -114,21 +110,49 @@
             this.btnDeleteNote.UseVisualStyleBackColor = true;
             this.btnDeleteNote.Click += new System.EventHandler(this.btnDeleteNote_Click);
             // 
+            // listBoxNotesOfUser
+            // 
+            this.listBoxNotesOfUser.FormattingEnabled = true;
+            this.listBoxNotesOfUser.Location = new System.Drawing.Point(0, 0);
+            this.listBoxNotesOfUser.Name = "listBoxNotesOfUser";
+            this.listBoxNotesOfUser.Size = new System.Drawing.Size(148, 173);
+            this.listBoxNotesOfUser.TabIndex = 9;
+            this.listBoxNotesOfUser.SelectedIndexChanged += new System.EventHandler(this.listBoxNotesOfUser_SelectedIndexChanged);
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Location = new System.Drawing.Point(12, 29);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.listBoxNotesOfUser);
+            this.splitContainer1.Panel1.Controls.Add(this.btnCreateNote);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.tBoxNoteText);
+            this.splitContainer1.Panel2.Controls.Add(this.btnDeleteNote);
+            this.splitContainer1.Panel2.Controls.Add(this.btnLogOut);
+            this.splitContainer1.Panel2.Controls.Add(this.btnChange);
+            this.splitContainer1.Panel2.Controls.Add(this.btnViewInfo);
+            this.splitContainer1.Size = new System.Drawing.Size(441, 252);
+            this.splitContainer1.SplitterDistance = 147;
+            this.splitContainer1.TabIndex = 10;
+            // 
             // UserWindow
             // 
-            this.ClientSize = new System.Drawing.Size(474, 461);
-            this.Controls.Add(this.btnDeleteNote);
-            this.Controls.Add(this.btnCreateNote);
-            this.Controls.Add(this.tBoxNoteText);
-            this.Controls.Add(this.btnViewInfo);
-            this.Controls.Add(this.btnChange);
-            this.Controls.Add(this.btnLogOut);
-            this.Controls.Add(this.coBoxUserNotes);
+            this.ClientSize = new System.Drawing.Size(457, 281);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.lblNoteСhoice);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "UserWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.UserWindow_Load);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -139,12 +163,13 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label lblNoteСhoice;
-        private System.Windows.Forms.ComboBox coBoxUserNotes;
         private System.Windows.Forms.Button btnLogOut;
         private System.Windows.Forms.Button btnChange;
         private System.Windows.Forms.Button btnViewInfo;
         private System.Windows.Forms.RichTextBox tBoxNoteText;
         private System.Windows.Forms.Button btnCreateNote;
         private System.Windows.Forms.Button btnDeleteNote;
+        private System.Windows.Forms.ListBox listBoxNotesOfUser;
+        private System.Windows.Forms.SplitContainer splitContainer1;
     }
 }

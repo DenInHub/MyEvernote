@@ -23,18 +23,19 @@ namespace MyEvernote.WinForm
         private void UserWindow_Load(object sender, EventArgs e)
         {
             if (!((MainForm)Owner).ChBoxSignUp.Checked)
-                coBoxUserNotes.Items.AddRange(Variable.Notes.Select(x => x.Title).ToArray()); // заполнение ListBox именами заметок
-        }
-
-        private void coBoxUserNotes_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(coBoxUserNotes.Text))
             {
-                tBoxNoteText.Text = string.Empty;
+                listBoxNotesOfUser.Items.AddRange(Variable.Notes.Select(x => x.Title).ToArray());
+            }
+        }
+        private void listBoxNotesOfUser_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(listBoxNotesOfUser.Text))
+            {
+                listBoxNotesOfUser.Text = string.Empty;
                 selectedNote = null;
                 return;
             }
-            selectedNote = Variable.Notes.Single(x => x.Title == coBoxUserNotes.Text);
+            selectedNote = Variable.Notes.Single(x => x.Title == listBoxNotesOfUser.Text);
             tBoxNoteText.Text = selectedNote.Text; // показать текст выбранной заметки
         }
 
@@ -64,7 +65,6 @@ namespace MyEvernote.WinForm
             if (selectedNote == null)
                 return;
             btnCreateNote_Click(sender, null); // форма(NoteWindow) для изменения и создания замекти одна , разница в кнопке ее вызывающей. 
-
         }
 
         private void btnLogOut_Click(object sender, EventArgs e)
@@ -87,14 +87,11 @@ namespace MyEvernote.WinForm
         {
             if (selectedNote == null)
                 return;
+            var NoteId = Variable.Notes.Single(x => x.Title == listBoxNotesOfUser.Text).Id;
+            ServiceClient.DeleteNote(selectedNote.Id);
+            Variable.Notes.Remove(Variable.Notes.Single(x => x.Title == listBoxNotesOfUser.Text));//удаляем из листа
 
-            var NoteId = Variable.Notes.Single(x => x.Title == coBoxUserNotes.Text).Id;
-
-            MainForm.serviceClient.client.DeleteAsync($"notes/{selectedNote.Id}");//удаляем из базы 
-
-            Variable.Notes.Remove(Variable.Notes.Single(x => x.Title == coBoxUserNotes.Text));//удаляем из листа
             RefreshWindow();
-            
         }
 
         public  void RefreshWindow()
@@ -102,15 +99,16 @@ namespace MyEvernote.WinForm
             //обновление бокса 
             if (Variable.Notes.Count != 0)
             {
-                coBoxUserNotes.DataSource = Variable.Notes.Select(x => x.Title).ToArray();
-                coBoxUserNotes.SelectedIndex = -1;
+                listBoxNotesOfUser.DataSource = Variable.Notes.Select(x => x.Title).ToArray();
+                listBoxNotesOfUser.SelectedIndex = - 1;
             }
             else
             {
-                coBoxUserNotes.DataSource = null;
-                coBoxUserNotes.Items.Clear();
-                coBoxUserNotes_SelectedIndexChanged(new object(), null);
+                listBoxNotesOfUser.DataSource = null;
+                listBoxNotesOfUser.Items.Clear();
+                listBoxNotesOfUser_SelectedIndexChanged(new object(), null);
             }
         }
+
     }
 }
