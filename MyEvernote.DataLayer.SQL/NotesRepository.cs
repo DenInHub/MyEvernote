@@ -9,6 +9,7 @@ namespace MyEvernote.DataLayer.SQL
 {
     public class NotesRepository : INote
     {
+        static SqlDependency dependency;
         readonly string _ConnectionString;
         public NotesRepository(string ConnectionString)
         {
@@ -19,9 +20,11 @@ namespace MyEvernote.DataLayer.SQL
         {
             using (SqlConnection connection = new SqlConnection(_ConnectionString))
             {
+                
                 connection.Open();
                 using (SqlCommand command = connection.CreateCommand())
                 {
+                    
                     note.Id = note.Id == null ? Guid.NewGuid() : note.Id; 
                     command.CommandText = @"insert into Note(Id,Title,DateCreated,Creator,Category,Text) values(@id,@title,@dateCreated,@creator,@category,@text)";
                     command.Parameters.AddWithValue("@id", note.Id);
@@ -31,6 +34,7 @@ namespace MyEvernote.DataLayer.SQL
                     command.Parameters.AddWithValue("@Title", note.Title);
                     command.Parameters.AddWithValue("@Text", note.Text);
                     command.ExecuteNonQuery();
+                   
                 }
             }
             return note;
@@ -211,6 +215,7 @@ namespace MyEvernote.DataLayer.SQL
                         note.Text = reader.GetString(reader.GetOrdinal("Text"));
                         note.Creator = reader.GetGuid(reader.GetOrdinal("Creator"));
                     }
+                    
                     // Вторая команда - забрать инфорцию о владельцах заметки
                     command.CommandText = "select UserId from Shared where NoteId  = @idd";
                     command.Parameters.AddWithValue("@idd", NoteId);
@@ -237,6 +242,7 @@ namespace MyEvernote.DataLayer.SQL
 
 
                     transaction.Commit();
+
                     return note;
                 }
             }
@@ -255,5 +261,7 @@ namespace MyEvernote.DataLayer.SQL
                 }
             }
         }
+
+        
     }
 }

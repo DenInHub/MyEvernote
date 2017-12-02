@@ -62,7 +62,7 @@ namespace MyEvernote.WinForm
         }                       // удалить
         public  static Note GetNote(Guid NoteId)
         {
-            return  client.GetAsync($"note/{NoteId}").Result.Content.ReadAsAsync<Note>().Result;
+            return client.GetAsync($"note/{NoteId}").Result.Content.ReadAsAsync<Note>().Result;
         }
 
         // Юзеры

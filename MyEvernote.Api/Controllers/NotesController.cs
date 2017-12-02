@@ -8,9 +8,10 @@ using MyEvernote.Logger;
 using System.Web.Http.Filters;
 
 
+
 namespace MyEvernote.Api.Controllers
 {
-   // [NotImplExceptionFilter]
+    //[MyExceptionFilter]
     public class NotesController : ApiController
     {
         private const string ConnectionString = @"Data Source=DESKTOP-IC679A3;Initial Catalog=MyEvernote;Integrated Security=True";
@@ -21,11 +22,12 @@ namespace MyEvernote.Api.Controllers
             _notesRepository = new NotesRepository(ConnectionString);
         }
 
+
         [HttpGet]
         [Route("api/note/{NoteId}")]
         public Note GetNote(Guid NoteId)
         {
-            Log.Instance.Info("заметки  с ID {0}", NoteId);
+            Log.Instance.Info("запрос заметки  с ID {0}", NoteId);
             return _notesRepository.GetNote(NoteId);
         }
 

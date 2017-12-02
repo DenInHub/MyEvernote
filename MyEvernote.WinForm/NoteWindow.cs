@@ -4,7 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using MyEvernote.Model;
-using System.Net.Http;
+using System.Threading;
 
 
 namespace MyEvernote.WinForm
@@ -36,8 +36,12 @@ namespace MyEvernote.WinForm
                 // чекнуть тех кому пошарена
                 foreach (var UserId in selectedNote.Shared)
                 {
+                    int index=0;
                     string UserName = Variable.Users.First(x => x.Id == UserId).Name;
-                    int index = checkedListBoxShared.Items.IndexOf(UserName);
+                    if (UserName != Variable.SelectedUser.Name)
+                        index = checkedListBoxShared.Items.IndexOf(UserName);
+                    else
+                        continue;
                     checkedListBoxShared.SetItemCheckState(index, CheckState.Checked);
                 }
             }
@@ -91,7 +95,7 @@ namespace MyEvernote.WinForm
 
 
             //---------------------- Shared
-            if (selectedNote?.Shared != null )
+            if ( selectedNote?.Shared.Count != 0 ) // если заметка кому то пошарена , то удалить эту зависимость из таблицы
                 ServiceClient.CancelShare(note.Id);
 
             List<string> SharedName = new List<string>();
@@ -105,6 +109,7 @@ namespace MyEvernote.WinForm
                 ServiceClient.ShareNote(note.Id, UserId);   
 
             }
+            Thread.Sleep(500); // ну да , костыль ; без него иногда из базы забирается заметка в которой еще нет информации о том , кому она пошарена
             //---------------------- END Shared
 
             //---------------------- Забрать из базы
@@ -127,6 +132,10 @@ namespace MyEvernote.WinForm
             Variable.CommandToCreate = false;
             Close();
             Application.OpenForms[Variable.UserWindow].Show();
+        }
+        public void OnDependencyChange()
+        {
+
         }
     }
 }

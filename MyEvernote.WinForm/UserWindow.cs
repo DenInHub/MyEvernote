@@ -26,6 +26,8 @@ namespace MyEvernote.WinForm
             {
                 listBoxNotesOfUser.Items.AddRange(Variable.Notes.Select(x => x.Title).ToArray());
             }
+            Text = Variable.SelectedUser.Name;
+
         }
         private void listBoxNotesOfUser_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -64,6 +66,11 @@ namespace MyEvernote.WinForm
         {
             if (selectedNote == null)
                 return;
+            if (selectedNote.Creator != Variable.SelectedUser.Id)
+            {
+                MessageBox.Show($"Недостаточно прав для редактирования .", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
             btnCreateNote_Click(sender, null); // форма(NoteWindow) для изменения и создания замекти одна , разница в кнопке ее вызывающей. 
         }
 
@@ -87,6 +94,11 @@ namespace MyEvernote.WinForm
         {
             if (selectedNote == null)
                 return;
+            if (selectedNote.Creator != Variable.SelectedUser.Id)
+            {
+                MessageBox.Show($"Недостаточно прав для удаления .", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
             var NoteId = Variable.Notes.Single(x => x.Title == listBoxNotesOfUser.Text).Id;
             ServiceClient.DeleteNote(selectedNote.Id);
             Variable.Notes.Remove(Variable.Notes.Single(x => x.Title == listBoxNotesOfUser.Text));//удаляем из листа
@@ -100,6 +112,8 @@ namespace MyEvernote.WinForm
             if (Variable.Notes.Count != 0)
             {
                 listBoxNotesOfUser.DataSource = Variable.Notes.Select(x => x.Title).ToArray();
+                tBoxNoteText.Text = string.Empty;
+
                 listBoxNotesOfUser.SelectedIndex = - 1;
             }
             else
@@ -107,8 +121,15 @@ namespace MyEvernote.WinForm
                 listBoxNotesOfUser.DataSource = null;
                 listBoxNotesOfUser.Items.Clear();
                 listBoxNotesOfUser_SelectedIndexChanged(new object(), null);
+                tBoxNoteText.Text = string.Empty;
             }
         }
 
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            Variable.Notes = ServiceClient.GetNotesOfUser(Variable.SelectedUser.Id);
+            //listBoxNotesOfUser.Items.AddRange(Variable.Notes.Select(x => x.Title).ToArray());
+            RefreshWindow();
+        }
     }
 }

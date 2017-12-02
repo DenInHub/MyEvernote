@@ -37,6 +37,7 @@
             this.btnDeleteNote = new System.Windows.Forms.Button();
             this.listBoxNotesOfUser = new System.Windows.Forms.ListBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.btnUpdate = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -126,6 +127,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.btnUpdate);
             this.splitContainer1.Panel1.Controls.Add(this.listBoxNotesOfUser);
             this.splitContainer1.Panel1.Controls.Add(this.btnCreateNote);
             // 
@@ -139,6 +141,16 @@
             this.splitContainer1.Size = new System.Drawing.Size(441, 252);
             this.splitContainer1.SplitterDistance = 147;
             this.splitContainer1.TabIndex = 10;
+            // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Location = new System.Drawing.Point(30, 217);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(75, 23);
+            this.btnUpdate.TabIndex = 9;
+            this.btnUpdate.Text = "Обновить";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
             // UserWindow
             // 
@@ -171,5 +183,6 @@
         private System.Windows.Forms.Button btnDeleteNote;
         private System.Windows.Forms.ListBox listBoxNotesOfUser;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.Button btnUpdate;
     }
 }

@@ -39,6 +39,7 @@ namespace MyEvernote.DataLayer.SQL.Tests
 
             //ShouldCleanUp();
         }
+
         [TestMethod]
         public void ShouldDeleteUser()
         {
@@ -58,6 +59,7 @@ namespace MyEvernote.DataLayer.SQL.Tests
 
             Assert.AreEqual(null, UserNotFound);
         }
+
         [TestMethod]
         public void ShouldCreateCategory()
         {
@@ -76,12 +78,14 @@ namespace MyEvernote.DataLayer.SQL.Tests
             //assert
             Assert.AreEqual(CreatedCategory.Id,CategoryFromDB.Id);
         }
+
         [TestMethod]
         public void ShouldCreateNote()
         {
             //arrange
+            var Categ = new CategoriesRepository(_connectionstring).Create(new Category() { Name = "TestCategory", Id = Guid.NewGuid() });
             var GuidCreator = new UsersRepository(_connectionstring).Create(new User() { Name = "TestUser" }).Id;
-            var GuidCategory = new CategoriesRepository(_connectionstring).Create(new Category() { Name = "TestCategory" }).Id;
+            var GuidCategory = Categ.Id;
             UsersForTests.Add(GuidCreator);
             CategoriesForTests.Add(GuidCategory);
             var note = new Note()
@@ -96,65 +100,12 @@ namespace MyEvernote.DataLayer.SQL.Tests
             //act
             var CreatedNote = repository.Create(note);
             NotesForTests.Add(CreatedNote.Id);
-            var NoteFromDB = repository.GetNotes(CreatedNote.Id);
+            var NoteFromDB = repository.GetNote(CreatedNote.Id);
 
             //assert
             Assert.AreEqual(CreatedNote.Id, NoteFromDB.Id);
         }
-        [TestMethod]
-        public void ShouldChangeNote()
-        {
-            //arrange
-            var GuidCreator = new UsersRepository(_connectionstring).Create(new User() { Name = "TestUser" }).Id;
-            var GuidCategory = new CategoriesRepository(_connectionstring).Create(new Category() { Name = "TestCategory" }).Id;
-            UsersForTests.Add(GuidCreator);
-            CategoriesForTests.Add(GuidCategory);
-            var note = new Note()
-            {
-                Title = "TestNote",
-                Text = "TestText",
-                Creator = GuidCreator,
-                Category = GuidCategory
-            };
-            var repository = new NotesRepository(_connectionstring);
-            var CreatedNote = repository.Create(note);
-            NotesForTests.Add(CreatedNote.Id);
-            note.Text = "Chanhed Text";
-            //act
-            repository.Change(note);
-            var ChangeNoteFromDB = repository.GetNotes(CreatedNote.Id);
-
-            //assert
-            Assert.AreEqual(note.Text, ChangeNoteFromDB.Text);
-        }
-        [TestMethod]
-        public  void ShouldShare()
-        {
-            //arrange
-            var GuidCreator1 = new UsersRepository(_connectionstring).Create(new User() { Name = "TestUser1" }).Id;
-            var GuidCreator2 = new UsersRepository(_connectionstring).Create(new User() { Name = "TestUser2" }).Id;
-            var GuidCategory = new CategoriesRepository(_connectionstring).Create(new Category() { Name = "TestCategory" }).Id;
-            UsersForTests.Add(GuidCreator1);
-            UsersForTests.Add(GuidCreator2);
-            CategoriesForTests.Add(GuidCategory);
-            var note = new Note()
-            {
-                Title = "TestNote",
-                Text = "TestText",
-                Creator = GuidCreator1,
-                Category = GuidCategory
-            };
-            var repository = new NotesRepository(_connectionstring);
-            var CreatedNote = repository.Create(note);
-            NotesForTests.Add(CreatedNote.Id);
-
-            //act
-            repository.Share(note.Id, GuidCreator2);
-
-
-            //assert
-            Assert.AreEqual(true , true);
-        }
+        
         [TestMethod]
         public void ShouldGetAllUsers()
         {
