@@ -9,10 +9,10 @@ namespace MyEvernote.DataLayer
 {
     public interface IUser
     {
-        User Create(User name);
+        ApplicationUser Create(ApplicationUser name);
         void Delete(Guid id);
-        User Get(Guid id);
-        List<User> GetAll();
+        ApplicationUser Get(Guid id);
+        IEnumerable<ApplicationUser> GetAll();
     }
 }
 

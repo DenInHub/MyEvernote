@@ -21,6 +21,7 @@ namespace MyEvernote.Api.Controllers
             _categoriesRepository = new CategoriesRepository(ConnectionString);
         }
 
+        [Authorize]
         [HttpGet]
         [Route("api/Categories/{id}")]
         public Category Get(Guid id)
@@ -30,11 +31,12 @@ namespace MyEvernote.Api.Controllers
         }
         [HttpGet]
         [Route("api/Categories")]
-        public List<Category> Get()
+        public IEnumerable<Category> Get()
         {
             return _categoriesRepository.GetCategories();
         }
 
+        [Authorize]
         [HttpPost]
         [Route("api/Categories")]
         public Category Create(Category category)
@@ -44,6 +46,7 @@ namespace MyEvernote.Api.Controllers
             return _categoriesRepository.Create(category);
         }
 
+        [Authorize]
         [HttpDelete]
         [Route("api/Categories/{id}")]
         public void Delete(Guid id)

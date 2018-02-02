@@ -19,11 +19,11 @@ namespace MyEvernote.WinForm
         {
             InitializeComponent();
         }
-
+        
         private void NoteWindow_Load(object sender, EventArgs e)
         {
             coBoxCategory.Items.AddRange(Variable.Categories.Select(x => x.Name).ToArray()); // заполнить категории
-            checkedListBoxShared.Items.AddRange(Variable.Users.Where(x => x.Name != Variable.SelectedUser.Name)?.Select(x => x.Name).ToArray());// заполнить лист бокс юзерами
+            checkedListBoxShared.Items.AddRange(Variable.Users.Where(x => x.UserName != Variable.SelectedUser.UserName)?.Select(x => x.UserName).ToArray());// заполнить лист бокс юзерами
             toolTipShowInfo.SetToolTip(coBoxCategory, "Выбрать категории из существующего списка.\nЕсли категория не выбрана будет установлена категория по умолчанию.\nДля создания новой категории введите ее имя");
             toolTipShowInfo.SetToolTip(checkedListBoxShared, "Если пользователи не отображаются значит их нет в базе");
 
@@ -37,16 +37,17 @@ namespace MyEvernote.WinForm
                 foreach (var UserId in selectedNote.Shared)
                 {
                     int index=0;
-                    string UserName = Variable.Users.First(x => x.Id == UserId).Name;
-                    if (UserName != Variable.SelectedUser.Name)
+                    string UserName = Variable.Users.First(x => x.Id_ == UserId).UserName;
+                    if (UserName != Variable.SelectedUser.UserName)
                         index = checkedListBoxShared.Items.IndexOf(UserName);
                     else
                         continue;
                     checkedListBoxShared.SetItemCheckState(index, CheckState.Checked);
                 }
             }
-        }
 
+            
+        }
 
         private  async void btnSaveNote_Click(object sender, EventArgs e)
         {
@@ -60,15 +61,16 @@ namespace MyEvernote.WinForm
             //---------------------- CategoryGuid
             Guid CategoryGuid;
             if (string.IsNullOrEmpty(coBoxCategory.Text))
-                CategoryGuid = Guid.Parse("00000000-0000-0000-0000-00000000FFFF"); // defult guid
+                CategoryGuid = Guid.Parse("00000000-0000-0000-0000-000000000000"); // defult guid
             else
             {
-                if (Variable.Categories.Exists(x => x.Name == coBoxCategory.Text)) // такая категория существует выбрать ее
+                var NameCategory = Variable.Categories.FirstOrDefault(x => x.Name == coBoxCategory.Text);
+                if (NameCategory != null) // такая категория существует выбрать ее
                     CategoryGuid = Variable.Categories.First(x => x.Name == coBoxCategory.Text).Id;
                 else // нетCategoryGuid - создать и добавить в лист 
                 {
                     Category NewCategory = new Category { Id = Guid.NewGuid(), Name = coBoxCategory.Text };
-                    Variable.Categories.Add(NewCategory);
+                    //Variable.Categories.Add(NewCategory);
                     CategoryGuid = ServiceClient.CreateCategory(NewCategory).Id;
                 }
             }
@@ -80,16 +82,14 @@ namespace MyEvernote.WinForm
             {
                 Title = TxtBoxTitleNote.Text,
                 Text = TxtBoxTextNote.Text,
-                Creator = Variable.SelectedUser.Id,
+                Creator = Variable.SelectedUser.Id_,
                 Category = CategoryGuid,
                 Id = Variable.CommandToCreate ? Guid.NewGuid() : selectedNote.Id
             };
 
             if (Variable.CommandToCreate)
-                // Create Note
                 await ServiceClient.CreateNote(note);
             else
-                // Change Note
                 await ServiceClient.ChangeNote(note);
             //---------------------- END Create Note
 
@@ -105,7 +105,7 @@ namespace MyEvernote.WinForm
 
             foreach (var UserName in SharedName)
             {
-                var UserId = Variable.Users.First(x => x.Name == UserName).Id; // найти соответствие в users и забрать guid
+                var UserId = Variable.Users.First(x => x.UserName == UserName).Id_; // найти соответствие в users и забрать guid
                 ServiceClient.ShareNote(note.Id, UserId);   
 
             }
@@ -119,11 +119,16 @@ namespace MyEvernote.WinForm
             else
                 Variable.Notes[index] = ServiceClient.GetNote(note.Id);
 
-            //------------------ END Забрать из базы
+            //---------------------- END Забрать из базы
 
+            Variable.Categories = ServiceClient.GetCategories();
             ((UserWindow)Owner).RefreshWindow();
             Variable.CommandToCreate = false;
             btnCancelCreation_Click(new object(), null);
+
+            //заметка обновилась . нужно всем сообщить - вызвать метод SignalR на сревере 
+            UserWindow.stockTickerHubProxy.Invoke("SomeMeth").Wait();
+
         }
 
 
@@ -132,10 +137,6 @@ namespace MyEvernote.WinForm
             Variable.CommandToCreate = false;
             Close();
             Application.OpenForms[Variable.UserWindow].Show();
-        }
-        public void OnDependencyChange()
-        {
-
         }
     }
 }

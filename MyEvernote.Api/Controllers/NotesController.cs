@@ -23,6 +23,7 @@ namespace MyEvernote.Api.Controllers
         }
 
 
+        [Authorize]
         [HttpGet]
         [Route("api/note/{NoteId}")]
         public Note GetNote(Guid NoteId)
@@ -31,14 +32,16 @@ namespace MyEvernote.Api.Controllers
             return _notesRepository.GetNote(NoteId);
         }
 
+        //[Authorize]
         [HttpGet]
-        [Route("api/notes/{id}")]
-        public List<Note> Get(Guid id)
+        [Route("api/notes/{UserID}")]
+        public List<Note> Get(Guid UserID)
         {
-            Log.Instance.Info("Запрос заметок пользователя с  ID {0}", id);
-            return _notesRepository.GetNotes(id);
+            Log.Instance.Info("Запрос заметок пользователя с  ID {0}", UserID);
+            return _notesRepository.GetNotes(UserID);
         }
 
+        [Authorize]
         [HttpPost]
         [Route("api/notes")]
         public Note Post(Note note)
@@ -47,6 +50,7 @@ namespace MyEvernote.Api.Controllers
             return _notesRepository.Create(note);
         }
 
+        [Authorize]
         [HttpPost]
         [Route("api/notes/{id}")]
         public void Change(Note note)
@@ -55,6 +59,8 @@ namespace MyEvernote.Api.Controllers
             _notesRepository.Change(note);
         }
 
+
+        [Authorize]
         [HttpDelete]
         [Route("api/notes/{id}")]
         public void Delete(Guid id)
@@ -63,6 +69,8 @@ namespace MyEvernote.Api.Controllers
             _notesRepository.Delete(id);
         }
 
+
+        [Authorize]
         [HttpDelete]
         [Route("api/notes/share/{NoteId}")]
         public void CancelShare(Guid NoteId)
@@ -70,6 +78,8 @@ namespace MyEvernote.Api.Controllers
             _notesRepository.CancelShare(NoteId);
         }
 
+
+        [Authorize]
         [HttpPost]
         [Route("api/notes/share/{NoteId}/{UserId}")]
         public void Share(Guid NoteId,Guid UserId)

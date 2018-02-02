@@ -24,18 +24,19 @@ namespace MyEvernote.DataLayer.SQL.Tests
         {
             Log.Instance.Info("from test user");//
             //arrange
-            var user = new User
+            var user = new ApplicationUser
             {
-                Name = "TestCreate"
+                UserName = "TestCreate",
+                Password = string.Empty
             };
 
             var repository = new UsersRepository(_connectionstring);
             //act
             var result = repository.Create(user);
-            UsersForTests.Add(result.Id);
-            var UserFromDB = repository.Get(result.Id);
+            UsersForTests.Add(result.Id_);
+            var UserFromDB = repository.Get(result.Id_);
             //assert
-            Assert.AreEqual(result.Name, UserFromDB.Name);
+            Assert.AreEqual(result.UserName, UserFromDB.UserName);
 
             //ShouldCleanUp();
         }
@@ -45,38 +46,20 @@ namespace MyEvernote.DataLayer.SQL.Tests
         {
             //arrange
             var flag=false;
-            var user = new User
+            var user = new ApplicationUser
             {
-                Name = "testDelete"
+                UserName = "testDelete",
+                Password = string.Empty
             };
             var repository = new UsersRepository(_connectionstring);
             var CreatedUser = repository.Create(user);
 
             //act
-            repository.Delete(CreatedUser.Id);
-            var UserNotFound = repository.Get(CreatedUser.Id);
+            repository.Delete(CreatedUser.Id_);
+            var UserNotFound = repository.Get(CreatedUser.Id_);
             //assert
 
             Assert.AreEqual(null, UserNotFound);
-        }
-
-        [TestMethod]
-        public void ShouldCreateCategory()
-        {
-            //arrange
-            var category = new Category()
-            {
-                Name = "TestCategory"
-            };
-            var repository = new CategoriesRepository(_connectionstring);
-            
-            //act
-            var CreatedCategory = repository.Create(category);
-            CategoriesForTests.Add(CreatedCategory.Id);
-            var CategoryFromDB = repository.Get(CreatedCategory.Id);
-            
-            //assert
-            Assert.AreEqual(CreatedCategory.Id,CategoryFromDB.Id);
         }
 
         [TestMethod]
@@ -84,16 +67,17 @@ namespace MyEvernote.DataLayer.SQL.Tests
         {
             //arrange
             var Categ = new CategoriesRepository(_connectionstring).Create(new Category() { Name = "TestCategory", Id = Guid.NewGuid() });
-            var GuidCreator = new UsersRepository(_connectionstring).Create(new User() { Name = "TestUser" }).Id;
+            var GuidCreator = new UsersRepository(_connectionstring).Create(new ApplicationUser() { UserName = "TestUser", Password = string.Empty }).Id_;
             var GuidCategory = Categ.Id;
             UsersForTests.Add(GuidCreator);
             CategoriesForTests.Add(GuidCategory);
             var note = new Note()
             {
-                Title = "TestNote",
-                Text = "TestText",
-                Creator = GuidCreator,
-                Category = GuidCategory
+                Title       = "TestNote",
+                Text        = "TestText",
+                Creator     = GuidCreator,
+                Category    = GuidCategory,
+                Id          = Guid.NewGuid()
             };
             var repository = new NotesRepository(_connectionstring);
 

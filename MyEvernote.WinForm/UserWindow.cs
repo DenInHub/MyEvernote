@@ -4,8 +4,8 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using MyEvernote.Model;
-using System.Net.Http;
-using System.Net.Http.Headers;
+using Microsoft.AspNet.SignalR.Client;
+
 
 
 namespace MyEvernote.WinForm
@@ -14,6 +14,8 @@ namespace MyEvernote.WinForm
     public partial class UserWindow : Form
     {
         public  Note selectedNote;
+        HubConnection hubConnection;
+        public static IHubProxy stockTickerHubProxy;
 
         public UserWindow()
         {
@@ -22,13 +24,32 @@ namespace MyEvernote.WinForm
 
         private void UserWindow_Load(object sender, EventArgs e)
         {
-            if (!((MainForm)Owner).ChBoxSignUp.Checked)
-            {
-                listBoxNotesOfUser.Items.AddRange(Variable.Notes.Select(x => x.Title).ToArray());
-            }
-            Text = Variable.SelectedUser.Name;
-
+            // SelectedUser был без ID , тут мы его всего забираем из базы
+            Variable.SelectedUser = ServiceClient.FindUser(Variable.SelectedUser);
+            // подгрузить заметки юзера
+            Variable.Notes = ServiceClient.GetNotesOfUser(Variable.SelectedUser.Id_);
+            listBoxNotesOfUser.Items.AddRange(Variable.Notes.Select(x => x.Title).ToArray());
+            // Хаб для SignalR
+            hubConnection = new HubConnection("http://localhost:36932/");
+            stockTickerHubProxy = hubConnection.CreateHubProxy("SignalRHub");
+            stockTickerHubProxy.On("Update", () => BW.RunWorkerAsync());// BW - BackgroundWorker
+            hubConnection.Start().Wait();
+            // BackgroundWorker для клиентской обработки серверного метода от SignalR
+            BW.DoWork += update;
+            BW.RunWorkerCompleted += BW_RunWorkerCompleted;
         }
+
+        private void BW_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            RefreshWindow();
+        }
+
+        private void update(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            Variable.Categories = ServiceClient.GetCategories();
+            Variable.Notes = ServiceClient.GetNotesOfUser(Variable.SelectedUser.Id_);
+        }
+
         private void listBoxNotesOfUser_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(listBoxNotesOfUser.Text))
@@ -49,24 +70,24 @@ namespace MyEvernote.WinForm
             List<string> owners = new List<string>();
             for (int i = 0; i < selectedNote?.Shared?.Count; i++)
             {
-                owners.Add(Variable.Users.First(x => x.Id == selectedNote.Shared[i]).Name);
+                owners.Add(Variable.Users.First(x => x.Id_ == selectedNote.Shared[i]).UserName);
             }
-            var str = string.Format("{0,-25}\t{1,-25}\n{2,-25}\t{3,-25}\n{4,-25}\t{5,-25}\n{6,-25}\t{7,-25}\n{8,-25}\t{9,-25}\n{10,-30}\n{11,-25}\n",
+            var InfoAboutNote = string.Format("{0,-25}\t{1,-25}\n{2,-25}\t{3,-25}\n{4,-25}\t{5,-25}\n{6,-25}\t{7,-25}\n{8,-25}\t{9,-25}\n{10,-30}\n{11,-25}\n",
                 "Имя заметки:", selectedNote.Title,
-                "Автор заметки:", Variable.Users.Single(x => x.Id == selectedNote.Creator).Name,
+                "Автор заметки:", Variable.Users.Single(x => x.Id_ == selectedNote.Creator).UserName,
                 "Категория заметки:", Variable.Categories?.First(x => x.Id == selectedNote.Category).Name,
                 "Дата создания:", selectedNote.Created,
                 "Дата изменения:", selectedNote.Changed,
                 "Владельцы:", string.Join("\n", owners)
                 );
-            MessageBox.Show(str, "Note info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(InfoAboutNote, "Note info", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private  void btnChange_Click(object sender, EventArgs e)
         {
             if (selectedNote == null)
                 return;
-            if (selectedNote.Creator != Variable.SelectedUser.Id)
+            if (selectedNote.Creator != Variable.SelectedUser.Id_)
             {
                 MessageBox.Show($"Недостаточно прав для редактирования .", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -82,8 +103,7 @@ namespace MyEvernote.WinForm
 
         private void btnCreateNote_Click(object sender, EventArgs e)
         {
-            Variable.CommandToCreate = (sender as Button).Name == "btnCreateNote"? true:false;
-
+            Variable.CommandToCreate = (sender as Button).Name == "btnCreateNote" ? true : false;
             var CreateNoteWindow = new NoteWindow();
             CreateNoteWindow.Owner = this;
             Hide();
@@ -94,7 +114,7 @@ namespace MyEvernote.WinForm
         {
             if (selectedNote == null)
                 return;
-            if (selectedNote.Creator != Variable.SelectedUser.Id)
+            if (selectedNote.Creator != Variable.SelectedUser.Id_)
             {
                 MessageBox.Show($"Недостаточно прав для удаления .", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -105,7 +125,7 @@ namespace MyEvernote.WinForm
 
             RefreshWindow();
         }
-
+        
         public  void RefreshWindow()
         {
             //обновление бокса 
@@ -127,7 +147,7 @@ namespace MyEvernote.WinForm
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            Variable.Notes = ServiceClient.GetNotesOfUser(Variable.SelectedUser.Id);
+            Variable.Notes = ServiceClient.GetNotesOfUser(Variable.SelectedUser.Id_);
             //listBoxNotesOfUser.Items.AddRange(Variable.Notes.Select(x => x.Title).ToArray());
             RefreshWindow();
         }

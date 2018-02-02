@@ -67,9 +67,8 @@ namespace MyEvernote.DataLayer.SQL
             }
         }
 
-        public List<Category> GetCategories()
+        public IEnumerable<Category> GetCategories()
         {
-            List<Category> Categories = new List<Category>();
             using (SqlConnection connection = new SqlConnection(_ConnectionString))
             {
                 connection.Open();
@@ -78,20 +77,15 @@ namespace MyEvernote.DataLayer.SQL
                     command.CommandText = "select * from Category ";
                     using (var reader = command.ExecuteReader())
                     {
-                        /*if (!reader.Read())
-                            throw new ArgumentException($"категория с Id {Id} не найдена");*/
                         while (reader.Read())
                         {
-                            var category = new Category();
-                            category.Id = reader.GetGuid(reader.GetOrdinal("Id"));
-                            category.Name = reader.GetString(reader.GetOrdinal("Category"));
-                            Categories.Add(category);
+                            yield return  new Category
+                            {
+                                Id = reader.GetGuid(reader.GetOrdinal("Id")),
+                                Name = reader.GetString(reader.GetOrdinal("Category"))
+                            };
                         }
-                        
-                        return Categories;
                     }
-
-
                 }
             }
         }

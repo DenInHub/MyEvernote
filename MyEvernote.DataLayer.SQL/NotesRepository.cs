@@ -16,6 +16,7 @@ namespace MyEvernote.DataLayer.SQL
             _ConnectionString = ConnectionString;
         }
 
+
         public Note Create(Note note)
         {
             using (SqlConnection connection = new SqlConnection(_ConnectionString))
@@ -39,6 +40,7 @@ namespace MyEvernote.DataLayer.SQL
             }
             return note;
         }
+
 
         public void Change(Note note)
         {
@@ -76,6 +78,7 @@ namespace MyEvernote.DataLayer.SQL
             }
         }
 
+
         public List<Note> GetNotes(Guid UserId)
         {
             using (SqlConnection connection = new SqlConnection(_ConnectionString))
@@ -96,7 +99,7 @@ namespace MyEvernote.DataLayer.SQL
                     using (var reader = command.ExecuteReader())
                     {
                         /*if (!reader.HasRows)
-                            throw new ArgumentException($"note с Id {UserId} не найденa");*/
+                            throw new ArgumentException($"заметок у  {UserId} не обнаружено");*/
                         while (reader.Read())
                         {
                             var note = new Note
@@ -126,7 +129,7 @@ namespace MyEvernote.DataLayer.SQL
                         {
                             var noteId = reader.GetGuid(reader.GetOrdinal("NoteId"));
 
-                            Notes.Single(x => x.Id == noteId)?.Shared.Add(reader.GetGuid(reader.GetOrdinal("UserId")));
+                            Notes.Single(x => x.Id == noteId).Shared.Add(reader.GetGuid(reader.GetOrdinal("UserId")));
                             
                         }
                     }
@@ -149,6 +152,7 @@ namespace MyEvernote.DataLayer.SQL
             }
         }
 
+
         public void Share(Guid NoteId , Guid UserId)
         {
             using (SqlConnection connection = new SqlConnection(_ConnectionString))
@@ -163,6 +167,7 @@ namespace MyEvernote.DataLayer.SQL
                 }
             }
         }
+
 
         public void Delete(Guid id)
         {
@@ -187,6 +192,7 @@ namespace MyEvernote.DataLayer.SQL
 
             }
         }
+
 
         public Note GetNote(Guid NoteId)
         {
@@ -247,6 +253,7 @@ namespace MyEvernote.DataLayer.SQL
                 }
             }
         }
+
 
         public void CancelShare(Guid NoteId)
         {

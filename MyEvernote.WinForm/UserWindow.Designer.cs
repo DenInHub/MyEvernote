@@ -38,6 +38,7 @@
             this.listBoxNotesOfUser = new System.Windows.Forms.ListBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.btnUpdate = new System.Windows.Forms.Button();
+            this.BW = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -184,5 +185,6 @@
         private System.Windows.Forms.ListBox listBoxNotesOfUser;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Button btnUpdate;
+        private System.ComponentModel.BackgroundWorker BW;
     }
 }

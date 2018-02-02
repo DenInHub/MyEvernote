@@ -14,7 +14,7 @@ namespace MyEvernote.DataLayer.SQL
             _ConnectionString = ConnectionString;
         }
 
-        public User Create(User user)
+        public ApplicationUser Create(ApplicationUser user)
         {
 
             using (SqlConnection connection = new SqlConnection(_ConnectionString))
@@ -22,11 +22,12 @@ namespace MyEvernote.DataLayer.SQL
                 connection.Open();
                 using (SqlCommand command = connection.CreateCommand())
                 {
-                    Log.Instance.Info("ура!!");
-                    user.Id =  Guid.NewGuid();
-                    command.CommandText = "insert into Users(Id,Name) values(@id,@name)";
-                    command.Parameters.AddWithValue("@id", user.Id);
-                    command.Parameters.AddWithValue("@name", user.Name);
+                    //Log.Instance.Info("ура!!");
+                    user.Id_ =  Guid.NewGuid();
+                    command.CommandText = "insert into Users(Id,Name,Password) values(@id,@name,@password)";
+                    command.Parameters.AddWithValue("@id", user.Id_);
+                    command.Parameters.AddWithValue("@name", user.UserName);
+                    command.Parameters.AddWithValue("@password", user.Password);
                     command.ExecuteNonQuery();
                 }
             }
@@ -64,7 +65,7 @@ namespace MyEvernote.DataLayer.SQL
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public User Get(Guid id)
+        public ApplicationUser Get(Guid id)
         {
             using (SqlConnection connection = new SqlConnection(_ConnectionString))
             {
@@ -80,10 +81,10 @@ namespace MyEvernote.DataLayer.SQL
                             return null;
 
                         //var idd = (string)reader["Id"];
-                        var user = new User
+                        var user = new ApplicationUser
                         {
-                            Id = reader.GetGuid(reader.GetOrdinal("Id")),
-                            Name = reader.GetString(reader.GetOrdinal("Name"))
+                            Id_ = reader.GetGuid(reader.GetOrdinal("Id")),
+                            UserName = reader.GetString(reader.GetOrdinal("Name"))
                         };
                         return user;
                     }
@@ -93,11 +94,11 @@ namespace MyEvernote.DataLayer.SQL
           
         }
 
-        public List<User> GetAll()
+        public IEnumerable<ApplicationUser> GetAll()
         {
             using (SqlConnection connection = new SqlConnection(_ConnectionString))
             {
-                List<User> Users= new List<User>();
+                IEnumerable<ApplicationUser> Users; //= new IEnumerable<ApplicationUser>();
                 connection.Open();
                 using (var command = connection.CreateCommand())
                 {
@@ -109,15 +110,14 @@ namespace MyEvernote.DataLayer.SQL
                             return null;*/
                         while (reader.Read())
                         {
-                            var user = new User
+                            yield return new ApplicationUser
                             {
-                                Id = reader.GetGuid(reader.GetOrdinal("Id")),
-                                Name = reader.GetString(reader.GetOrdinal("Name"))
+                                Id_ = reader.GetGuid(reader.GetOrdinal("Id")),
+                                UserName = reader.GetString(reader.GetOrdinal("Name")),
+                                Password = reader.GetString(reader.GetOrdinal("Password"))
                             };
-                            Users.Add(user);
                         }
                     }
-                    return Users;
 
                 }
             }
