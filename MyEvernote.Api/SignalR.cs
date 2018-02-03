@@ -14,7 +14,6 @@ namespace MyEvernote.Api
         public void SomeMeth()
         {
             Clients.All.Update();
-            //return "q";
         }
     }
 }

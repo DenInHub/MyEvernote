@@ -11,6 +11,7 @@ using MyEvernote.Logger;
 
 namespace MyEvernote.Api.Controllers
 {
+    [MyExceptionFilter]
     public class CategoriesController : ApiController
     {
         private const string ConnectionString = @"Data Source=DESKTOP-IC679A3;Initial Catalog=MyEvernote;Integrated Security=True"; //

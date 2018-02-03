@@ -12,6 +12,7 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace MyEvernote.Api.Controllers
 {
+    [MyExceptionFilter]
     /// <summary>
 	/// Управление пользователями
 	/// </summary>

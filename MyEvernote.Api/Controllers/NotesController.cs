@@ -11,7 +11,7 @@ using System.Web.Http.Filters;
 
 namespace MyEvernote.Api.Controllers
 {
-    //[MyExceptionFilter]
+    [MyExceptionFilter]
     public class NotesController : ApiController
     {
         private const string ConnectionString = @"Data Source=DESKTOP-IC679A3;Initial Catalog=MyEvernote;Integrated Security=True";
