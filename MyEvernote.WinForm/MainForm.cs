@@ -66,7 +66,6 @@ namespace MyEvernote.WinForm
         static public IEnumerable<ApplicationUser> Users;
         static public IEnumerable<Category> Categories;
         static public List<Note> Notes;
-        static public Form activeForm;
         static public ApplicationUser SelectedUser;
         static public bool CommandToCreate = false;
         static public readonly int MainForm = 0; // индекс окна в Application.OpenForms
