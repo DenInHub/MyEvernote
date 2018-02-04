@@ -29,14 +29,14 @@ namespace MyEvernote.WinForm
 
             if (Variable.CommandToCreate != true) // если редактируем , то выводим информацию о заметке в окно
             {
-                selectedNote = ((UserWindow)Owner).selectedNote;
-                coBoxCategory.Text = Variable.Categories.First(x => x.Id == selectedNote.Category).Name;
-                TxtBoxTitleNote.Text = selectedNote.Title;
-                TxtBoxTextNote.Text = selectedNote.Text;
+                selectedNote            = ((UserWindow)Owner).selectedNote;
+                coBoxCategory.Text      = Variable.Categories.First(x => x.Id == selectedNote.Category).Name;
+                TxtBoxTitleNote.Text    = selectedNote.Title;
+                TxtBoxTextNote.Text     = selectedNote.Text;
                 // чекнуть тех кому пошарена
                 foreach (var UserId in selectedNote.Shared)
                 {
-                    int index=0;
+                    int index       = 0;
                     string UserName = Variable.Users.First(x => x.Id_ == UserId).UserName;
                     if (UserName != Variable.SelectedUser.UserName)
                         index = checkedListBoxShared.Items.IndexOf(UserName);
@@ -101,15 +101,14 @@ namespace MyEvernote.WinForm
             List<string> SharedName = new List<string>();
             SharedName.AddRange(checkedListBoxShared.CheckedItems.Cast<string>().ToArray()); // забрать имена юзеров из checkedListBoxShared
 
-            var requestUri = $"notes/share/{note.Id}";
 
             foreach (var UserName in SharedName)
             {
                 var UserId = Variable.Users.First(x => x.UserName == UserName).Id_; // найти соответствие в users и забрать guid
-                ServiceClient.ShareNote(note.Id, UserId);   
+                await ServiceClient.ShareNote(note.Id, UserId);   
 
             }
-            Thread.Sleep(500); // ну да , костыль ; без него иногда из базы забирается заметка в которой еще нет информации о том , кому она пошарена
+            //Thread.Sleep(500); // ну да , костыль ; без него иногда из базы забирается заметка в которой еще нет информации о том , кому она пошарена
             //---------------------- END Shared
 
             //---------------------- Забрать из базы
@@ -121,7 +120,7 @@ namespace MyEvernote.WinForm
 
             //---------------------- END Забрать из базы
 
-            Variable.Categories = ServiceClient.GetCategories();
+            Variable.Categories = await ServiceClient.GetCategories();
             ((UserWindow)Owner).RefreshWindow();
             Variable.CommandToCreate = false;
             btnCancelCreation_Click(new object(), null);

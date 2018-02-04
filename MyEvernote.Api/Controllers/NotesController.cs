@@ -5,7 +5,6 @@ using MyEvernote.DataLayer;
 using MyEvernote.DataLayer.SQL;
 using MyEvernote.Model;
 using MyEvernote.Logger;
-using System.Web.Http.Filters;
 
 
 

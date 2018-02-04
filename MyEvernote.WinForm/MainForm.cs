@@ -10,6 +10,8 @@ namespace MyEvernote.WinForm
     {
         public static string Token;
         bool flag = false;
+        public static string info;
+
 
         public MainForm()
         {
@@ -24,19 +26,19 @@ namespace MyEvernote.WinForm
 
         private async void btnSignIn_Click(object sender, EventArgs e)
         {
-            string info;
             if (!ChBoxSignUp.Checked)//log in
             {
                 // срисовали юзера
                 Variable.SelectedUser = new ApplicationUser() { UserName = tBoxNameUser.Text, Password = tBoxPassword.Text };
 
                 // получить токен и установить токен MainForm.Token. если юзера нет в базе - в info придет информация об этом
-                if (ServiceClient.GetToken(Variable.SelectedUser,out  info))
+                if (await ServiceClient.GetToken(Variable.SelectedUser))
                 {
-                    Variable.Users = ServiceClient.GetAllUsers();
-                    Variable.Categories = ServiceClient.GetCategories();
-                    var userWindow = new UserWindow();
-                    userWindow.Owner = this;
+                    //Variable.Users = ServiceClient.GetAllUsers();
+                    Variable.Users      = await ServiceClient.GetAllUsers();
+                    Variable.Categories = await ServiceClient.GetCategories();
+                    var userWindow      = new UserWindow();
+                    userWindow.Owner    = this;
                     Hide();
                     userWindow.Show();
                 }
@@ -56,7 +58,7 @@ namespace MyEvernote.WinForm
                     else
                     {
                         ChBoxSignUp.Checked = false;
-                        MessageBox.Show($"ОК", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show($"ОК", "Регистрация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
             }

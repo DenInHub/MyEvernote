@@ -22,12 +22,12 @@ namespace MyEvernote.WinForm
             InitializeComponent();
         }
 
-        private void UserWindow_Load(object sender, EventArgs e)
+        private async void UserWindow_Load(object sender, EventArgs e)
         {
             // SelectedUser был без ID , тут мы его всего забираем из базы
             Variable.SelectedUser = ServiceClient.FindUser(Variable.SelectedUser);
             // подгрузить заметки юзера
-            Variable.Notes = ServiceClient.GetNotesOfUser(Variable.SelectedUser.Id_);
+            Variable.Notes = await ServiceClient.GetNotesOfUser(Variable.SelectedUser.Id_);
             listBoxNotesOfUser.Items.AddRange(Variable.Notes.Select(x => x.Title).ToArray());
             // Хаб для SignalR
             hubConnection = new HubConnection("http://localhost:36932/");
@@ -39,17 +39,15 @@ namespace MyEvernote.WinForm
             BW.RunWorkerCompleted += BW_RunWorkerCompleted;
         }
 
+        private async void update(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            Variable.Categories = await ServiceClient.GetCategories();
+            Variable.Notes      = await ServiceClient.GetNotesOfUser(Variable.SelectedUser.Id_);
+        }
         private void BW_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
             RefreshWindow();
         }
-
-        private void update(object sender, System.ComponentModel.DoWorkEventArgs e)
-        {
-            Variable.Categories = ServiceClient.GetCategories();
-            Variable.Notes = ServiceClient.GetNotesOfUser(Variable.SelectedUser.Id_);
-        }
-
         private void listBoxNotesOfUser_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(listBoxNotesOfUser.Text))
@@ -108,6 +106,7 @@ namespace MyEvernote.WinForm
             CreateNoteWindow.Owner = this;
             Hide();
             CreateNoteWindow.Show();
+            
         }
 
         private void btnDeleteNote_Click(object sender, EventArgs e)
@@ -145,9 +144,9 @@ namespace MyEvernote.WinForm
             }
         }
 
-        private void btnUpdate_Click(object sender, EventArgs e)
+        private async void btnUpdate_Click(object sender, EventArgs e)
         {
-            Variable.Notes = ServiceClient.GetNotesOfUser(Variable.SelectedUser.Id_);
+            Variable.Notes = await ServiceClient.GetNotesOfUser(Variable.SelectedUser.Id_);
             //listBoxNotesOfUser.Items.AddRange(Variable.Notes.Select(x => x.Title).ToArray());
             RefreshWindow();
         }

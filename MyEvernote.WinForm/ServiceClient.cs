@@ -27,21 +27,20 @@ namespace MyEvernote.WinForm
         {
             return client.PostAsJsonAsync("api/Categories/", Category).Result.Content.ReadAsAsync<Category>().Result;
         }
-        public static IEnumerable<Category> GetCategories()
+        public async static Task<IEnumerable<Category>> GetCategories()
         {
             return client.GetAsync("api/Categories").Result.Content.ReadAsAsync<IEnumerable<Category>>().Result;
         }
 
         // Заметки
-        public async static void ShareNote(Guid NoteId, Guid UserId)
+        public async static Task ShareNote(Guid NoteId, Guid UserId)
         {
             await client.PostAsJsonAsync($"api/notes/share/{NoteId}/{UserId}", string.Empty); 
         }           // пошарить
 
-        public static List<Note> GetNotesOfUser(Guid id)
+        public async static Task<List<Note>> GetNotesOfUser(Guid id)
         {
-            var notes = client.GetAsync($"api/notes/{id}").Result.Content.ReadAsAsync<List<Note>>().Result;
-            return notes;
+            return client.GetAsync($"api/notes/{id}").Result.Content.ReadAsAsync<List<Note>>().Result;
         }                       // заметки юзера
         
         public async static Task CreateNote(Note Note)
@@ -69,7 +68,7 @@ namespace MyEvernote.WinForm
         }
 
         // Юзеры
-        public static IEnumerable<ApplicationUser> GetAllUsers()
+        public async static Task<IEnumerable<ApplicationUser>> GetAllUsers()
         {
             //var user = client.GetAsync("users/all").Result.Content.ReadAsAsync<List<ApplicationUser>>().Result;
             var users = client.GetAsync("api/users/all").Result.Content.ReadAsAsync<IEnumerable<ApplicationUser>>().Result;
@@ -90,11 +89,11 @@ namespace MyEvernote.WinForm
         /// <summary>
         /// Возвращает "true" если токен установлен и "false" если токен не установлен
         /// </summary> 
-        public static bool GetToken(ApplicationUser user, out string str )
+        public static async Task<bool> GetToken(ApplicationUser user )
         {
-            str = string.Empty;
+            //str = string.Empty;
             //запрос токена
-            HttpResponseMessage response = client.PostAsync("Token",
+            HttpResponseMessage response =  client.PostAsync("Token",
                 new StringContent(string.Format("grant_type=password&username={0}&password={1}",
                 HttpUtility.UrlEncode(user.UserName),
                 HttpUtility.UrlEncode(user.Password)),
@@ -114,7 +113,7 @@ namespace MyEvernote.WinForm
             }
             else
             {
-                str = ParseResultJSON["error_description"]?.ToString();
+                MainForm.info = ParseResultJSON["error_description"]?.ToString();
                 return false;
             }
         }
