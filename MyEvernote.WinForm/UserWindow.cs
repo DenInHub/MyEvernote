@@ -25,18 +25,18 @@ namespace MyEvernote.WinForm
         private async void UserWindow_Load(object sender, EventArgs e)
         {
             // SelectedUser был без ID , тут мы его всего забираем из базы
-            Variable.SelectedUser = ServiceClient.FindUser(Variable.SelectedUser);
+            Variable.SelectedUser   = ServiceClient.FindUser(Variable.SelectedUser);
             // подгрузить заметки юзера
-            Variable.Notes = await ServiceClient.GetNotesOfUser(Variable.SelectedUser.Id_);
+            Variable.Notes          = await ServiceClient.GetNotesOfUser(Variable.SelectedUser.Id_);
             listBoxNotesOfUser.Items.AddRange(Variable.Notes.Select(x => x.Title).ToArray());
             // Хаб для SignalR
-            hubConnection = new HubConnection("http://localhost:36932/");
-            stockTickerHubProxy = hubConnection.CreateHubProxy("SignalRHub");
+            hubConnection           = new HubConnection("http://localhost:36932/");
+            stockTickerHubProxy     = hubConnection.CreateHubProxy("SignalRHub");
             stockTickerHubProxy.On("Update", () => BW.RunWorkerAsync());// BW - BackgroundWorker
             hubConnection.Start().Wait();
             // BackgroundWorker для клиентской обработки серверного метода от SignalR
-            BW.DoWork += update;
-            BW.RunWorkerCompleted += BW_RunWorkerCompleted;
+            BW.DoWork               += update;
+            BW.RunWorkerCompleted   += BW_RunWorkerCompleted;
         }
 
         private async void update(object sender, System.ComponentModel.DoWorkEventArgs e)
@@ -56,7 +56,7 @@ namespace MyEvernote.WinForm
                 selectedNote = null;
                 return;
             }
-            selectedNote = Variable.Notes.Single(x => x.Title == listBoxNotesOfUser.Text);
+            selectedNote      = Variable.Notes.Single(x => x.Title == listBoxNotesOfUser.Text);
             tBoxNoteText.Text = selectedNote.Text; // показать текст выбранной заметки
         }
 
@@ -71,12 +71,12 @@ namespace MyEvernote.WinForm
                 owners.Add(Variable.Users.First(x => x.Id_ == selectedNote.Shared[i]).UserName);
             }
             var InfoAboutNote = string.Format("{0,-25}\t{1,-25}\n{2,-25}\t{3,-25}\n{4,-25}\t{5,-25}\n{6,-25}\t{7,-25}\n{8,-25}\t{9,-25}\n{10,-30}\n{11,-25}\n",
-                "Имя заметки:", selectedNote.Title,
-                "Автор заметки:", Variable.Users.Single(x => x.Id_ == selectedNote.Creator).UserName,
+                "Имя заметки:",       selectedNote.Title,
+                "Автор заметки:",     Variable.Users.Single(x => x.Id_ == selectedNote.Creator).UserName,
                 "Категория заметки:", Variable.Categories?.First(x => x.Id == selectedNote.Category).Name,
-                "Дата создания:", selectedNote.Created,
-                "Дата изменения:", selectedNote.Changed,
-                "Владельцы:", string.Join("\n", owners)
+                "Дата создания:",     selectedNote.Created,
+                "Дата изменения:",    selectedNote.Changed,
+                "Владельцы:",         string.Join("\n", owners)
                 );
             MessageBox.Show(InfoAboutNote, "Note info", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -106,7 +106,6 @@ namespace MyEvernote.WinForm
             CreateNoteWindow.Owner = this;
             Hide();
             CreateNoteWindow.Show();
-            
         }
 
         private void btnDeleteNote_Click(object sender, EventArgs e)
@@ -130,24 +129,23 @@ namespace MyEvernote.WinForm
             //обновление бокса 
             if (Variable.Notes.Count != 0)
             {
-                listBoxNotesOfUser.DataSource = Variable.Notes.Select(x => x.Title).ToArray();
-                tBoxNoteText.Text = string.Empty;
+                listBoxNotesOfUser.DataSource   = Variable.Notes.Select(x => x.Title).ToArray();
+                tBoxNoteText.Text               = string.Empty;
 
                 listBoxNotesOfUser.SelectedIndex = - 1;
             }
             else
             {
-                listBoxNotesOfUser.DataSource = null;
+                listBoxNotesOfUser.DataSource   = null;
                 listBoxNotesOfUser.Items.Clear();
                 listBoxNotesOfUser_SelectedIndexChanged(new object(), null);
-                tBoxNoteText.Text = string.Empty;
+                tBoxNoteText.Text               = string.Empty;
             }
         }
 
         private async void btnUpdate_Click(object sender, EventArgs e)
         {
             Variable.Notes = await ServiceClient.GetNotesOfUser(Variable.SelectedUser.Id_);
-            //listBoxNotesOfUser.Items.AddRange(Variable.Notes.Select(x => x.Title).ToArray());
             RefreshWindow();
         }
     }

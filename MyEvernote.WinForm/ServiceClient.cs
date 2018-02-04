@@ -94,10 +94,10 @@ namespace MyEvernote.WinForm
             //запрос токена
             HttpResponseMessage response =  client.PostAsync("Token",
                 new StringContent(string.Format("grant_type=password&username={0}&password={1}",
-                HttpUtility.UrlEncode(user.UserName),
-                HttpUtility.UrlEncode(user.Password)),
-                Encoding.UTF8,
-                "application/x-www-form-urlencoded")).Result;
+                    HttpUtility.UrlEncode(user.UserName),
+                    HttpUtility.UrlEncode(user.Password)),
+                    Encoding.UTF8,
+                    "application/x-www-form-urlencoded")).Result;
 
             //ответ API
             string ResultJSON = response.Content.ReadAsStringAsync().Result;

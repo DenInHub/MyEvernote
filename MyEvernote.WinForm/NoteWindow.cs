@@ -64,9 +64,9 @@ namespace MyEvernote.WinForm
                 CategoryGuid = Guid.Parse("00000000-0000-0000-0000-000000000000"); // defult guid
             else
             {
-                var NameCategory = Variable.Categories.FirstOrDefault(x => x.Name == coBoxCategory.Text);
+                var NameCategory  = Variable.Categories.FirstOrDefault(x => x.Name == coBoxCategory.Text);
                 if (NameCategory != null) // такая категория существует выбрать ее
-                    CategoryGuid = Variable.Categories.First(x => x.Name == coBoxCategory.Text).Id;
+                    CategoryGuid  = Variable.Categories.First(x => x.Name == coBoxCategory.Text).Id;
                 else // нетCategoryGuid - создать и добавить в лист 
                 {
                     Category NewCategory = new Category { Id = Guid.NewGuid(), Name = coBoxCategory.Text };
@@ -80,11 +80,11 @@ namespace MyEvernote.WinForm
             //---------------------- Create Note
             Note note = new Note()
             {
-                Title = TxtBoxTitleNote.Text,
-                Text = TxtBoxTextNote.Text,
-                Creator = Variable.SelectedUser.Id_,
-                Category = CategoryGuid,
-                Id = Variable.CommandToCreate ? Guid.NewGuid() : selectedNote.Id
+                Title       = TxtBoxTitleNote.Text,
+                Text        = TxtBoxTextNote.Text,
+                Creator     = Variable.SelectedUser.Id_,
+                Category    = CategoryGuid,
+                Id          = Variable.CommandToCreate ? Guid.NewGuid() : selectedNote.Id
             };
 
             if (Variable.CommandToCreate)
@@ -118,9 +118,9 @@ namespace MyEvernote.WinForm
 
             //---------------------- END Забрать из базы
 
-            Variable.Categories = await ServiceClient.GetCategories();
+            Variable.Categories         = await ServiceClient.GetCategories();
+            Variable.CommandToCreate    = false;
             ((UserWindow)Owner).RefreshWindow();
-            Variable.CommandToCreate = false;
             btnCancelCreation_Click(new object(), null);
 
             //заметка обновилась . нужно всем сообщить - вызвать метод SignalR на сревере 
