@@ -8,10 +8,8 @@ namespace MyEvernote.WinForm
 {
     public partial class MainForm : Form
     {
-        public static string Token;
-        bool flag = false;
+        public static string Token; // по хорошему сделать ограничение на set
         public static string info;
-
 
         public MainForm()
         {
@@ -20,7 +18,6 @@ namespace MyEvernote.WinForm
     
         private void MainForm_Load(object sender, EventArgs e)
         {
-            Variable.activeForm = ActiveForm;
             toolTipShowInfo.SetToolTip(ChBoxSignUp, "Создание нового пользователя.Имя пользователя должно быть уникальным");
         }
 

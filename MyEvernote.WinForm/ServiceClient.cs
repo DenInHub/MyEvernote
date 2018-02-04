@@ -91,7 +91,6 @@ namespace MyEvernote.WinForm
         /// </summary> 
         public static async Task<bool> GetToken(ApplicationUser user )
         {
-            //str = string.Empty;
             //запрос токена
             HttpResponseMessage response =  client.PostAsync("Token",
                 new StringContent(string.Format("grant_type=password&username={0}&password={1}",

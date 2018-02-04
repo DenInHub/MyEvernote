@@ -336,3 +336,15 @@
 2018-02-04 12:20:21.4710|INFO|MyEvernote.Logger.Log|запрос заметки  с ID 1cdba721-40ba-456d-9fb7-83bd7c031162
 2018-02-04 12:20:21.8198|INFO|MyEvernote.Logger.Log|Запрос заметок пользователя с  ID 73b65447-eeeb-4094-9add-3ec165ba83c2
 2018-02-04 12:20:21.8588|INFO|MyEvernote.Logger.Log|Запрос заметок пользователя с  ID d558f3a6-92ca-4544-91f2-d5b2da8e8137
+2018-02-04 12:34:53.9452|INFO|MyEvernote.Logger.Log|Запрос всех пользователей
+2018-02-04 12:34:54.7538|INFO|MyEvernote.Logger.Log|Запрос пользователя с  именем я
+2018-02-04 12:34:54.8468|INFO|MyEvernote.Logger.Log|Запрос заметок пользователя с  ID d558f3a6-92ca-4544-91f2-d5b2da8e8137
+2018-02-04 12:35:00.1030|INFO|MyEvernote.Logger.Log|Создание заметки с 2  ID c2c6c5e6-646e-40c0-a3a1-b73910ed29e0
+2018-02-04 12:35:00.1746|INFO|MyEvernote.Logger.Log|запрос заметки  с ID c2c6c5e6-646e-40c0-a3a1-b73910ed29e0
+2018-02-04 12:35:00.6655|INFO|MyEvernote.Logger.Log|Запрос заметок пользователя с  ID d558f3a6-92ca-4544-91f2-d5b2da8e8137
+2018-02-04 12:35:05.2274|INFO|MyEvernote.Logger.Log|Изменение заметки с 2  ID c2c6c5e6-646e-40c0-a3a1-b73910ed29e0
+2018-02-04 12:35:05.3135|INFO|MyEvernote.Logger.Log|Расшарить заметкку c2c6c5e6-646e-40c0-a3a1-b73910ed29e0 пользователю 73b65447-eeeb-4094-9add-3ec165ba83c2
+2018-02-04 12:35:05.3661|INFO|MyEvernote.Logger.Log|запрос заметки  с ID c2c6c5e6-646e-40c0-a3a1-b73910ed29e0
+2018-02-04 12:35:05.6248|INFO|MyEvernote.Logger.Log|Запрос заметок пользователя с  ID d558f3a6-92ca-4544-91f2-d5b2da8e8137
+2018-02-04 12:35:08.2519|INFO|MyEvernote.Logger.Log|Удаление заметки с  ID c2c6c5e6-646e-40c0-a3a1-b73910ed29e0
+2018-02-04 12:35:13.9755|INFO|MyEvernote.Logger.Log|Запрос заметок пользователя с  ID d558f3a6-92ca-4544-91f2-d5b2da8e8137

@@ -101,7 +101,6 @@ namespace MyEvernote.WinForm
             List<string> SharedName = new List<string>();
             SharedName.AddRange(checkedListBoxShared.CheckedItems.Cast<string>().ToArray()); // забрать имена юзеров из checkedListBoxShared
 
-
             foreach (var UserName in SharedName)
             {
                 var UserId = Variable.Users.First(x => x.UserName == UserName).Id_; // найти соответствие в users и забрать guid
