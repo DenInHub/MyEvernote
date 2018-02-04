@@ -108,7 +108,6 @@ namespace MyEvernote.WinForm
                 await ServiceClient.ShareNote(note.Id, UserId);   
 
             }
-            //Thread.Sleep(500); // ну да , костыль ; без него иногда из базы забирается заметка в которой еще нет информации о том , кому она пошарена
             //---------------------- END Shared
 
             //---------------------- Забрать из базы
